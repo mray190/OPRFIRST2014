@@ -9,6 +9,7 @@
 package net.TeamRUSH27.OPRFIRST;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import net.TeamRUSH27.OPRFIRST.RSSFeed.FeedMessage;
 import net.TeamRUSH27.OPRFIRST.RSSFeed.RSSAdapter;
@@ -25,6 +26,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -32,6 +34,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -89,7 +92,7 @@ public class HomePage extends SherlockFragmentActivity {
 		
 		//Setup for the SearchView in the ActionBar's action_search for AutoCompleteTextView
 		MenuItem searchItem = menu.findItem(R.id.action_search);
-		mSearchView =(SearchView) searchItem.getActionView();
+		mSearchView = (SearchView) searchItem.getActionView();
 		
 		return true;
 	}
@@ -164,40 +167,81 @@ public class HomePage extends SherlockFragmentActivity {
 	 */
 	public void onClick(View view) {
 		//Create an intent based on what the user is searching for, if is eligible intent
-		Intent intent;
+		Intent intent = new Intent();// = null;
 		String[] regCodes = null;
 		//If this is true, we have a team # on our hands to handle
 		if(textView.getText().charAt(0) >= 48 && textView.getText().charAt(0) <=57) {
-			
+			try {
+				int teamNumber= Integer.parseInt(textView.getText().toString());
+				intent = new Intent(HomePage.this, TeamInfoInterface.class);
+				if(prefs.getString("pref_year", "2013").equals("2013")) 
+					regCodes = getResources().getStringArray(R.array.regCodes2013);
+				else
+					regCodes = getResources().getStringArray(R.array.regCodes2014);
+				//before we start the activity, check that the team actually exists
+				if(Utilities.teamExists(teamNumber, this)) {
+					intent.putExtra(HomePage.EXTRA_MESSAGE, String.valueOf(teamNumber));
+					startActivity(intent);
+				}
+				else {	//notify user
+					Toast.makeText(this, "FRC#" + teamNumber+ " doesn't exist!", Toast.LENGTH_SHORT).show();
+				}
+			}
+			catch(NumberFormatException e) {
+				//make the user try again! Shoulda formatted their number properly!
+				//So do nothing here. Exit this if-statement, and stop processing the request.
+			}
 		}
-		else { //check if it's a team!
+		else { //check if it's an event!
 			if(prefs.getString("pref_year", "2013").equals("2013")) {
 				regCodes = getResources().getStringArray(R.array.regCodes2013);
 			}
 			else
 				regCodes = getResources().getStringArray(R.array.regCodes2014);
-			//make sure it's a team, otherwise don't continue
+			//Log.d("OPFIRST2014 code", Arrays.toString(regCodes));
+			int val = 0;
+			String code = textView.getText().toString();
+			for(int i = 0; i < regCodes.length; i++) {
+				if(code.equals(regCodes[i]))
+					val = i;
+			}
+			if(val%2==1) {
+				val--;
+				code = regCodes[val];
+			//}
+			Log.d("OPRFIRST2014 code, regCodes", code+";"+regCodes[val+1]);
+			//if(code.equals(regCodes[val+1])) {
+				intent = new Intent(HomePage.this, RegInfoInterface.class);
+				intent.putExtra(HomePage.EXTRA_MESSAGE,  code+";"+regCodes[val+1]);
+				startActivity(intent);
+			}
+			else {	//notify user of failure
+				Toast.makeText(this, "Event \"" + textView.getText() + "\" doesn't exist!", Toast.LENGTH_SHORT).show();
+			}
 		}
 		
 		
 		//if (textView.getText().toString().length()>4)  
 		//	intent = new Intent(HomePage.this, RegInfoInterface.class);
-		//else 
-		//	intent = new Intent(HomePage.this, TeamInfoInterface.class);
-		//Get the regional code for an event if the search text is a regional name
 		
-		if (prefs.getString("pref_year", "2013").equals("2013"))
+		/*if (prefs.getString("pref_year", "2013").equals("2013"))
 			regCodes = getResources().getStringArray(R.array.regCodes2013);
 		else
 			regCodes = getResources().getStringArray(R.array.regCodes2014);
 		int val = 0;
 		String code = textView.getText().toString();
-		for (int i=0; i<regCodes.length; i++) { if (code.equals(regCodes[i])) val = i; }
-		if (val%2==1) { val--; code = regCodes[val]; }
+		for (int i=0; i<regCodes.length; i++) { 
+			if (code.equals(regCodes[i])) 
+				val = i; 
+		}
+		if (val%2==1) { 
+			val--; 
+			code = regCodes[val]; 
+		}
 		//Add the info to the intent and start the activity
 		intent.putExtra(HomePage.EXTRA_MESSAGE, code+";"+regCodes[val+1]);
 		if (code.length()!=0)
-			startActivity(intent);
+			startActivity(intent);*/
 	}
 	
 	private class RefreshAll extends AsyncTask <Void, Integer, String> {
