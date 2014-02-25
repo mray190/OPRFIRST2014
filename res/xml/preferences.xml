@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory 
+        android:title="@string/pref_year_title"
+        android:key="pref_year_container">
+        <ListPreference 
+            android:key="pref_year"
+            android:title="@string/pref_year_title"
+            android:summary="@string/pref_year_summary"
+            android:entries="@array/prefYears"
+            android:entryValues="@array/prefYears" 
+            android:defaultValue="2014"/>
+    </PreferenceCategory>
+    <PreferenceCategory 
+        android:title="@string/pref_rss_title"
+        android:key="pref_rss">
+	    <CheckBoxPreference 
+	        android:key="pref_autoScroll"
+	        android:title="@string/pref_autoScroll"
+	        android:summary="@string/pref_autoScroll_summary"
+	        android:defaultValue="true"/>
+	    <CheckBoxPreference 
+	        android:key="pref_autoUpdate"
+	        android:title="@string/pref_autoUpdate"
+	        android:summary="@string/pref_autoUpdate_summary"
+	        android:defaultValue="true"/>
+    </PreferenceCategory>
+    <PreferenceCategory 
+        android:title="@string/pref_data_title"
+        android:key="pref_data">
+	    <CheckBoxPreference 
+	        android:key="pref_displayWebsite"
+	        android:title="@string/pref_displayWebsite"
+	        android:summary="@string/pref_displayWebsite_summary"
+	        android:defaultValue="false"/>
+    </PreferenceCategory>
+</PreferenceScreen>

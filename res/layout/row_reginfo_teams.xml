@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:background="#000000" >
+    
+    <TextView
+        android:id="@+id/numberTTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.2"
+        android:textColor="#ffffff" ></TextView>
+    
+     <TextView
+        android:id="@+id/nameTTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_vertical"
+        android:textColor="#ffffff"
+        android:layout_weight="0.4">
+        </TextView>
+        
+     <TextView
+        android:id="@+id/locationTTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.4"
+        android:textColor="#ffffff" >
+
+    </TextView>
+    
+    
+
+</LinearLayout>

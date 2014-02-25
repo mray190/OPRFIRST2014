@@ -1,0 +1,417 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:background="#000000"
+    android:layout_height="fill_parent" >
+    
+    <LinearLayout
+        android:id="@+id/redTeams"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        android:background="#ff0000" >
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+	        android:orientation="horizontal">
+            <TextView
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.6"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:text="@string/matchPredictTeam"
+	            android:textColor="#ffffff" />
+            <TextView
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.4"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:text="@string/matchPredictOPR"
+	            android:textColor="#ffffff" />
+        </LinearLayout>
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+	        android:orientation="horizontal">
+            <TextView
+	            android:id="@+id/redTeam1"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.6"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:textColor="#ffffff" />
+            <TextView
+	            android:id="@+id/redOpr1"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.4"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:textColor="#ffffff" />
+        </LinearLayout>
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+	        android:orientation="horizontal">
+            <TextView
+	            android:id="@+id/redTeam2"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.6"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:textColor="#ffffff" />
+            <TextView
+	            android:id="@+id/redOpr2"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.4"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:textColor="#ffffff" />
+        </LinearLayout>
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+	        android:layout_marginBottom="15dp"
+	        android:orientation="horizontal">
+            <TextView
+	            android:id="@+id/redTeam3"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.6"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:textColor="#ffffff" />
+            <TextView
+	            android:id="@+id/redOpr3"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.4"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:textColor="#ffffff" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/blueTeams"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/redTeams"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@+id/redTeams"
+        android:background="#0000ff"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="@string/matchPredictTeam"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="@string/matchPredictOPR"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/blueTeam1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/blueOpr1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/blueTeam2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/blueOpr2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/blueTeam3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/blueOpr3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/redScores"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/redTeams"
+        android:layout_below="@id/redTeams"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical" >
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="#ff0000"
+	        android:orientation="horizontal">
+            <TextView
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.6"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:text="@string/matchPredictScore"
+	            android:textColor="#ffffff" />
+            <TextView
+	            android:id="@+id/redScore"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.4"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:textColor="#ffffff" />
+        </LinearLayout>
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+	        android:orientation="horizontal">
+            <TextView
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.6"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:text="@string/matchPredictAuton"
+	            android:textColor="#ff0000" />
+            <TextView
+	            android:id="@+id/redAuton"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.4"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:textColor="#ff0000" />
+        </LinearLayout>
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+	        android:orientation="horizontal">
+            <TextView
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.6"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:text="@string/matchPredictTeleop"
+	            android:textColor="#ff0000" />
+            <TextView
+	            android:id="@+id/redTeleop"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.4"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:textColor="#ff0000" />
+        </LinearLayout>
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+	        android:orientation="horizontal">
+            <TextView
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.6"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:text="@string/matchPredictEnd"
+	            android:textColor="#ff0000" />
+            <TextView
+	            android:id="@+id/redEnd"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.4"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:textColor="#ff0000" />
+        </LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/blueScores"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/blueTeams"
+        android:layout_below="@id/blueTeams"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical" >
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="#0000ff"
+	        android:orientation="horizontal">
+            <TextView
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.6"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:text="@string/matchPredictScore"
+	            android:textColor="#ffffff" />
+            <TextView
+	            android:id="@+id/blueScore"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.4"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:textColor="#ffffff" />
+        </LinearLayout>
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+	        android:orientation="horizontal">
+            <TextView
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.6"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:text="@string/matchPredictAuton"
+	            android:textColor="#0088ff" />
+            <TextView
+	            android:id="@+id/blueAuton"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.4"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:textColor="#0088ff" />
+        </LinearLayout>
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+	        android:orientation="horizontal">
+            <TextView
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.6"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:text="@string/matchPredictTeleop"
+	            android:textColor="#0088ff" />
+            <TextView
+	            android:id="@+id/blueTeleop"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.4"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:textColor="#0088ff" />
+        </LinearLayout>
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+	        android:orientation="horizontal">
+            <TextView
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.6"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:text="@string/matchPredictEnd"
+	            android:textColor="#0088ff" />
+            <TextView
+	            android:id="@+id/blueEnd"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.4"
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            android:textColor="#0088ff" />
+        </LinearLayout>
+    </LinearLayout>
+    
+</RelativeLayout>

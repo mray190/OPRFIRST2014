@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="saveOptions">
+        <item>External Storage/SD Card</item>
+        <item>Internal Storage</item>
+    </string-array>
+    <string-array name="saveOptionsAlias">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="prefYears">
+        <item>2013</item>
+        <item>2014</item>
+    </string-array>
+    <string-array name="regCodes2013">
+		<item>2013txsa</item><item>Alamo</item>
+		<item>2013orpo</item><item>Autodesk Oregon</item>
+		<item>2013nhma</item><item>BAE Granite State</item>
+		<item>2013lake</item><item>Bayou</item>
+		<item>2013mibed</item><item>Bedford FiM</item>
+		<item>2013inwl</item><item>Boilermaker</item>
+		<item>2013mabo</item><item>Boston</item>
+		<item>2013njbrg</item><item>Bridgewater-Raritan MAR</item>
+		<item>2013ohcl</item><item>Buckeye</item>
+		<item>2013cama</item><item>Central Valley</item>
+		<item>2013wase2</item><item>Central Washington</item>
+		<item>2013mdba</item><item>Chesapeake</item>
+		<item>2013code</item><item>Colorado</item>
+		<item>2013ctha</item><item>Connecticut</item>
+		<item>2013inth</item><item>Crossroads</item>
+		<item>2013txda</item><item>Dallas</item>
+		<item>2013midet</item><item>Detroit FiM</item>
+		<item>2013qcmo</item><item>Festival de Robotique FRC a Montreal</item>
+		<item>2013nyro</item><item>Finger Lakes</item>
+		<item>2013migbl</item><item>Grand Blanc FiM</item>
+		<item>2013mokc</item><item>Greater Kansas City</item>
+		<item>2013onto</item><item>Greater Toronto East</item>
+		<item>2013onto2</item><item>Greater Toronto West</item>
+		<item>2013migul</item><item>Gull Lake FiM</item>
+		<item>2013pahat</item><item>Hatboro-Horsham MAR</item>
+		<item>2013hiho</item><item>Hawaii</item>
+		<item>2013txlu</item><item>Hub City</item>
+		<item>2013casb</item><item>Inland Empire</item>
+		<item>2013ista</item><item>Israel</item>
+		<item>2013miket</item><item>Kettering University FiM</item>
+		<item>2013mndu</item><item>Lake Superior</item>
+		<item>2013nvlv</item><item>Las Vegas</item>
+		<item>2013njlen</item><item>Lenape Seneca MAR</item>
+		<item>2013miliv</item><item>Livonia FiM</item>
+		<item>2013txho</item><item>Lone Star</item>
+		<item>2013calb</item><item>Los Angeles</item>
+		<item>2013micmp</item><item>Michigan State Championship</item>
+		<item>2013mrcmp</item><item>Mid-Atlantic Region Championship</item>
+		<item>2013ilch</item><item>Midwest</item>
+		<item>2013mnmi</item><item>Minnesota 10000 Lakes</item>
+		<item>2013mnmi2</item><item>Minnesota North Star</item>
+		<item>2013njfla</item><item>Mount Olive MAR</item>
+		<item>2013nyny</item><item>New York City</item>
+		<item>2013ncre</item><item>North Carolina</item>
+		<item>2013mndu2</item><item>Northern Lights</item>
+		<item>2013okok</item><item>Oklahoma</item>
+		<item>2013flor</item><item>Orlando</item>
+		<item>2013scmb</item><item>Palmetto</item>
+		<item>2013gadu</item><item>Peachtree</item>
+		<item>2013azch</item><item>Phoenix</item>
+		<item>2013mele</item><item>Pine Tree</item>
+		<item>2013papi</item><item>Pittsburgh</item>
+		<item>2013ohic</item><item>Queen City</item>
+		<item>2013arfa</item><item>Razorback</item>
+		<item>2013casa</item><item>Sacramento</item>
+		<item>2013casd</item><item>San Diego</item>
+		<item>2013nyli</item><item>SBPLI Long Island</item>
+		<item>2013wase</item><item>Seattle</item>
+		<item>2013casj</item><item>Silicon Valley</item>
+		<item>2013tnkn</item><item>Smoky Mountains</item>
+		<item>2013flbr</item><item>South Florida</item>
+		<item>2013wach</item><item>Spokane</item>
+		<item>2013paphi</item><item>Springside - Chestnut Hill MAR</item>
+		<item>2013misjo</item><item>St. Joseph FiM</item>
+		<item>2013mosl</item><item>St. Louis</item>
+		<item>2013njewn</item><item>TCNJ MAR</item>
+		<item>2013mitvc</item><item>Traverse City FiM</item>
+		<item>2013mitry</item><item>Troy FiM</item>
+		<item>2013utwv</item><item>Utah</item>
+		<item>2013vari</item><item>Virginia</item>
+		<item>2013dcwa</item><item>Washington DC</item>
+		<item>2013miwfd</item><item>Waterford FiM</item>
+		<item>2013onwa</item><item>Waterloo</item>
+		<item>2013miwmi</item><item>West Michigan FiM</item>
+		<item>2013abca</item><item>Western Canadian</item>
+		<item>2013wimi</item><item>Wisconsin</item>
+		<item>2013mawo</item><item>WPI</item>
+		<item>2013cmp</item><item>FIRST Championship</item>
+		<item>2013archimedes</item><item>FIRST Championship - Archimedes Division</item>
+		<item>2013curie</item><item>FIRST Championship - Curie Division</item>
+		<item>2013galileo</item><item>FIRST Championship - Galileo Division</item>
+		<item>2013newton</item><item>FIRST Championship - Newton Division</item>
+		<item>2013einstein</item><item>FIRST Championship - Einstein Field</item>
+	</string-array>
+	<string-array name="regCodes2014">
+	    <item>2014txsa</item><item>Alamo</item>
+		<item>2014azch</item><item>Arizona</item>
+		<item>2014arfa</item><item>Arkansas</item>
+		<item>2014lake</item><item>Bayou</item>
+		<item>2014inwl</item><item>Boilermaker</item>
+		<item>2014ohcl</item><item>Buckeye</item>
+		<item>2014ilil</item><item>Central Illinois</item>
+		<item>2014cama</item><item>Central Valley</item>
+		<item>2014mdba</item><item>Chesapeake</item>
+		<item>2014code</item><item>Colorado</item>
+		<item>2014inth</item><item>Crossroads</item>
+		<item>2014txda</item><item>Dallas</item>
+		<item>2014qcmo</item><item>Festival de Robotique FRC a Montreal</item>
+		<item>2014nyro</item><item>Finger Lakes</item>
+		<item>2014dcwa</item><item>Greater DC</item>
+		<item>2014mokc</item><item>Greater Kansas City</item>
+		<item>2014papi</item><item>Greater Pittsburgh</item>
+		<item>2014onto</item><item>Greater Toronto East</item>
+		<item>2014onto2</item><item>Greater Toronto West</item>
+		<item>2014hiho</item><item>Hawaii</item>
+		<item>2014txlu</item><item>Hub City</item>
+		<item>2014casb</item><item>Inland Empire</item>
+		<item>2014ista</item><item>Israel</item>
+		<item>2014mndu</item><item>Lake Superior</item>
+		<item>2014nvlv</item><item>Las Vegas</item>
+		<item>2014txho</item><item>Lone Star</item>
+		<item>2014calb</item><item>Los Angeles</item>
+		<item>2014mxmc</item><item>Mexico City</item>
+		<item>2014ilch</item><item>Midwest</item>
+		<item>2014mnmi</item><item>Minnesota 10000 Lakes</item>
+		<item>2014mnmi2</item><item>Minnesota North Star</item>
+		<item>2014nyny</item><item>New York City</item>
+		<item>2014nytr</item><item>New York Tech Valley</item>
+		<item>2014onnb</item><item>North Bay</item>
+		<item>2014ncre</item><item>North Carolina</item>
+		<item>2014mndu2</item><item>Northern Lights</item>
+		<item>2014okok</item><item>Oklahoma</item>
+		<item>2014flor</item><item>Orlando</item>
+		<item>2014scmb</item><item>Palmetto</item>
+		<item>2014gadu</item><item>Peachtree</item>
+		<item>2014ohci</item><item>Queen City</item>
+		<item>2014casa</item><item>Sacramento</item>
+		<item>2014casd</item><item>San Diego</item>
+		<item>2014nyli</item><item>SBPLI Long Island</item>
+		<item>2014casj</item><item>Silicon Valley</item>
+		<item>2014tnkn</item><item>Smoky Mountains</item>
+		<item>2014flfo</item><item>South Florida</item>
+		<item>2014mosl</item><item>St. Louis</item>
+		<item>2014utwv</item><item>Utah</item>
+		<item>2014vari</item><item>Virginia</item>
+		<item>2014onwa</item><item>Waterloo</item>
+		<item>2014abca</item><item>Western Canada</item>
+		<item>2014onwi</item><item>Windsor Essex Great Lakes</item>
+		<item>2014wimi</item><item>Wisconsin</item>
+		<item>2014njbri</item><item>MAR Bridgewater-Raritan</item>
+		<item>2014njcli</item><item>MAR Clifton</item>
+		<item>2014pahat</item><item>MAR Hatboro-Horsham</item>
+		<item>2014njtab</item><item>MAR Lenape-Seneca</item>
+		<item>2014njfla</item><item>MAR Mt. Olive</item>
+		<item>2014paphi</item><item>MAR Springside Chestnut Hill</item>
+		<item>2014mrcmp</item><item>Mid-Atlantic Region Championship</item>
+		<item>2014mibed</item><item>MI Bedford</item>
+		<item>2014micen</item><item>MI Center Line</item>
+		<item>2014miesc</item><item>MI Escanaba</item>
+		<item>2014mimid</item><item>MI Great Lakes Bay Region</item>
+		<item>2014migul</item><item>MI Gull Lake</item>
+		<item>2014mihow</item><item>MI Howell</item>
+		<item>2014miket</item><item>MI Kettering University</item>
+		<item>2014miliv</item><item>MI Livonia</item>
+		<item>2014misou</item><item>MI Southfield</item>
+		<item>2014misjo</item><item>MI St. Joseph</item>
+		<item>2014mitvc</item><item>MI Traverse City</item>
+		<item>2014mitry</item><item>MI Troy</item>
+		<item>2014miwat</item><item>MI Waterford</item>
+		<item>2014miwmi</item><item>MI West Michigan</item>
+		<item>2014micmp</item><item>Michigan State Championship</item>
+		<item>2014nhnas</item><item>NE Granite State</item>
+		<item>2014ctgro</item><item>NE Groton</item>
+		<item>2014cthar</item><item>NE Hartford</item>
+		<item>2014mabos</item><item>NE Northeastern University</item>
+		<item>2014melew</item><item>NE Pine Tree</item>
+		<item>2014rismi</item><item>NE Rhode Island</item>
+		<item>2014ctsou</item><item>NE Southington</item>
+		<item>2014nhdur</item><item>NE UNH</item>
+		<item>2014mawor</item><item>NE WPI</item>
+		<item>2014necmp</item><item>New England Region Championship</item>
+		<item>2014waahs</item><item>PNW Auburn</item>
+		<item>2014waamv</item><item>PNW Auburn Mountainview</item>
+		<item>2014waell</item><item>PNW Central Washington University</item>
+		<item>2014wache</item><item>PNW Eastern Washington University</item>
+		<item>2014wasno</item><item>PNW Glacier Peak</item>
+		<item>2014wamou</item><item>PNW Mt. Vernon</item>
+		<item>2014orore</item><item>PNW Oregon City</item>
+		<item>2014orosu</item><item>PNW Oregon State University</item>
+		<item>2014washo</item><item>PNW Shorewood</item>
+		<item>2014orwil</item><item>PNW Wilsonville</item>
+		<item>2014pncmp</item><item>Autodesk PNW Championship</item>
+		<item>2014cmp</item><item>FIRST Championship</item>
+		<item>2014archimedes</item><item>FIRST Championship - Archimedes Division</item>
+		<item>2014curie</item><item>FIRST Championship - Curie Division</item>
+		<item>2014galileo</item><item>FIRST Championship - Galileo Division</item>
+		<item>2014newton</item><item>FIRST Championship - Newton Division</item>
+		<item>2014einstein</item><item>FIRST Championship - Einstein Field</item>  
+	</string-array>
+</resources>

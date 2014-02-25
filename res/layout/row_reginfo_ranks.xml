@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#000000"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp" >
+	    
+	<TextView
+		 android:id="@+id/rankTxt"
+		 android:layout_width="0dp"
+		 android:gravity="center_horizontal|center_vertical"
+		 android:layout_height="fill_parent"
+		 android:textColor="#ffffff"
+		 android:layout_weight="0.25"> </TextView>
+	
+	<LinearLayout
+		android:layout_width="0dp"
+		android:layout_height="fill_parent"
+		android:orientation="vertical"
+		android:layout_weight="0.75"
+		android:paddingTop="5dp"
+		android:paddingBottom="5dp"
+		android:background="#000000">
+		
+	    <LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="0dp"
+			android:orientation="horizontal"
+			android:layout_weight="0.5"
+			android:paddingTop="5dp"
+			android:paddingBottom="5dp"
+			android:background="#000000">
+	
+			<TextView
+				 android:id="@+id/teamTxt"
+				 android:layout_width="0dp"
+				 android:gravity="center_horizontal|center_vertical"
+				 android:layout_height="fill_parent"
+				 android:textColor="#ffff00"
+				 android:layout_weight="0.3"> </TextView>
+    
+	        <TextView
+		 		android:id="@+id/recordTxt"
+		 		android:layout_width="0dp"
+		 		android:layout_height="fill_parent"
+		 		android:gravity="center"
+		 		android:textColor="#ffffff"
+		 		android:layout_weight="0.5"> </TextView>
+	        
+	        <TextView
+		 		android:id="@+id/qsTxt"
+		 		android:layout_width="0dp"
+		 		android:gravity="center"
+		 		android:layout_height="fill_parent"
+		 		android:textColor="#ffffff"
+		 		android:layout_weight="0.2"> </TextView>
+	        
+        </LinearLayout>
+	        
+	    <LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="0dp"
+			android:orientation="horizontal"
+			android:layout_weight="0.5"
+			android:paddingTop="5dp"
+			android:paddingBottom="5dp"
+			android:background="#000000">
+    
+	        <TextView
+		 		android:layout_width="0dp"
+			 	android:layout_height="fill_parent"
+		 		android:textColor="#ffffff"
+		 		android:text="A:"
+		 		android:layout_weight="0.1"> </TextView>
+	        
+	        <TextView
+		 		android:id="@+id/autonTxt"
+		 		android:layout_width="0dp"
+			 	android:layout_height="fill_parent"
+		 		android:textColor="#ffffff"
+		 		android:layout_weight="0.23"> </TextView>
+	        
+	        <TextView
+		 		android:layout_width="0dp"
+			 	android:layout_height="fill_parent"
+		 		android:textColor="#ffffff"
+		 		android:text="T:"
+		 		android:layout_weight="0.1"> </TextView>
+	        
+	        <TextView
+		 		android:id="@+id/teleopTxt"
+		 		android:layout_width="0dp"
+			 	android:layout_height="fill_parent"
+		 		android:textColor="#ffffff"
+		 		android:layout_weight="0.23"> </TextView>
+	        
+	        <TextView
+		 		android:layout_width="0dp"
+			 	android:layout_height="fill_parent"
+		 		android:textColor="#ffffff"
+		 		android:text="C:"
+		 		android:layout_weight="0.1"> </TextView>
+	        
+	        <TextView
+		 		android:id="@+id/climbTxt"
+		 		android:layout_width="0dp"
+			 	android:layout_height="fill_parent"
+		 		android:textColor="#ffffff"
+		 		android:layout_weight="0.23"> </TextView>
+	        
+        </LinearLayout>
+	        
+    </LinearLayout>
+	    
+</LinearLayout>

@@ -1,0 +1,86 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#000000" >
+
+    <ImageView
+        android:id="@+id/pic_main_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/main_content_desc"
+        android:src="@drawable/titlescreen" />
+    
+	<LinearLayout android:focusable="true"
+		android:focusableInTouchMode="true" 
+		android:layout_width="0px"
+		android:layout_height="0px" >
+	    <requestFocus />
+	</LinearLayout>
+	
+    <AutoCompleteTextView
+        android:id="@+id/selection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:textColor="#000000"
+        android:layout_below="@+id/pic_main_page"
+        android:ems="10"
+        android:hint="@string/main_help_text"
+        android:inputType="text" >
+    </AutoCompleteTextView>
+
+    <Button
+        android:id="@+id/btn_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/selection"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/selection"
+        android:text="@string/main_button"
+        android:onClick="onClick">
+    </Button>
+    <!--
+    <LinearLayout
+        android:id="@+id/lv"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rssFeedHolder" >
+    
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:maxHeight="50dp"
+        android:maxWidth="50dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        android:src="@drawable/opr" />
+    
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="Owned by Michael Ray"
+        android:textColor="#ffffff" />
+
+    </LinearLayout> -->
+
+    <ListView
+        android:id="@+id/lst_rss_feed_holder"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="#000000"
+        android:layout_below="@id/selection"
+        android:paddingTop="10dp" >
+    </ListView>
+
+</RelativeLayout>

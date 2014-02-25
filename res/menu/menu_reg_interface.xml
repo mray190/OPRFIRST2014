@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/action_refresh"
+        android:orderInCategory="99"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_refresh_light"
+        android:title="@string/action_refresh"/>
+    <item
+        android:id="@+id/action_overflow"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/overflow"
+        android:icon="@drawable/ic_action_overflow">
+        <menu>
+            <item
+		        android:id="@+id/action_sort"
+		        android:orderInCategory="0"
+		        android:showAsAction="never"
+		        android:title="@string/sort"
+		        android:icon="@drawable/ic_sort">
+                <menu>
+                    <item android:id="@+id/sort_team"
+                        android:title="@string/sortTeam" />
+                    <group android:id="@+id/stats">
+                    <item android:id="@+id/sort_opr"
+                        android:title="@string/sortOPR" />
+                    <item android:id="@+id/sort_aopr"
+                        android:title="@string/sortAOPR" />
+                    <item android:id="@+id/sort_topr"
+                        android:title="@string/sortTOPR" />
+                    <item android:id="@+id/sort_copr"
+                        android:title="@string/sortEOPR" />
+                    <item android:id="@+id/sort_avg"
+                        android:title="@string/sortAvg" />
+                    </group>
+                    <group android:id="@+id/ranks" >
+                    <item android:id="@+id/sort_rank"
+                        android:title="@string/sortRank" />
+                    <item android:id="@+id/sort_record"
+                        android:title="@string/sortRecord" />
+                    <item android:id="@+id/sort_auton"
+                        android:title="@string/sortAPts" />
+                    <item android:id="@+id/sort_teleop"
+                        android:title="@string/sortTPts" />
+                    <item android:id="@+id/sort_climb"
+                        android:title="@string/sortEPts" />    
+                    </group>
+                </menu>
+            </item>
+            <item
+		        android:id="@+id/action_settings"
+		        android:orderInCategory="98"
+		        android:showAsAction="never"
+		        android:title="@string/action_settings"
+		        android:icon="@drawable/ic_settings" />
+            <item
+		        android:id="@+id/action_about"
+		        android:orderInCategory="99"
+		        android:showAsAction="never"
+		        android:title="@string/action_about"
+		        android:icon="@drawable/ic_about" />
+            <item
+		        android:id="@+id/action_help"
+		        android:orderInCategory="100"
+		        android:showAsAction="never"
+		        android:title="@string/action_help"
+		        android:icon="@drawable/ic_help" />
+       	</menu>
+   	</item>
+</menu>

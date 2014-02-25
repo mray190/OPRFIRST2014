@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="NewApi">
+        <ignore path="src/net/TeamRUSH27/OPRFIRST/PrefsFragment.java" />
+        <ignore path="src/net/TeamRUSH27/OPRFIRST/SettingsFragment.java" />
+    </issue>
+</lint>
