@@ -38,6 +38,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.SearchView;
 
 /*
  * @author Michael Ray
@@ -48,6 +49,7 @@ public class HomePage extends SherlockFragmentActivity {
 	private ActionBar actionBar;
 	private MenuItem menuitem;
 	private AutoCompleteTextView textView;
+	private SearchView mSearchView;
 	private SharedPreferences prefs;
 	
 	@Override
@@ -84,6 +86,11 @@ public class HomePage extends SherlockFragmentActivity {
 		//Create the menu in the action bar for the home page
 		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.menu_home_page, menu);
+		
+		//Setup for the SearchView in the ActionBar's action_search for AutoCompleteTextView
+		MenuItem searchItem = menu.findItem(R.id.action_search);
+		mSearchView =(SearchView) searchItem.getActionView();
+		
 		return true;
 	}
 	
@@ -104,6 +111,9 @@ public class HomePage extends SherlockFragmentActivity {
 			return true;
 		case R.id.action_help: //Displays the help screen
 			onCoachMark();
+			return true;
+		case R.id.action_search: //Searching for team or event, like the AutoCompletingTextView below
+			
 			return true;
 		case R.id.action_about: //Displays the current information about the app
 			String vName="", vCode="";
@@ -153,12 +163,29 @@ public class HomePage extends SherlockFragmentActivity {
 	 * @return void
 	 */
 	public void onClick(View view) {
-		//Create an intent based on what the user is searching for
+		//Create an intent based on what the user is searching for, if is eligible intent
 		Intent intent;
-		if (textView.getText().toString().length()>4)  intent = new Intent(HomePage.this, RegInfoInterface.class);
-		else intent = new Intent(HomePage.this, TeamInfoInterface.class);
-		//Get the regional code for an even if the search text is a regional name
-		String[] regCodes;
+		String[] regCodes = null;
+		//If this is true, we have a team # on our hands to handle
+		if(textView.getText().charAt(0) >= 48 && textView.getText().charAt(0) <=57) {
+			
+		}
+		else { //check if it's a team!
+			if(prefs.getString("pref_year", "2013").equals("2013")) {
+				regCodes = getResources().getStringArray(R.array.regCodes2013);
+			}
+			else
+				regCodes = getResources().getStringArray(R.array.regCodes2014);
+			//make sure it's a team, otherwise don't continue
+		}
+		
+		
+		//if (textView.getText().toString().length()>4)  
+		//	intent = new Intent(HomePage.this, RegInfoInterface.class);
+		//else 
+		//	intent = new Intent(HomePage.this, TeamInfoInterface.class);
+		//Get the regional code for an event if the search text is a regional name
+		
 		if (prefs.getString("pref_year", "2013").equals("2013"))
 			regCodes = getResources().getStringArray(R.array.regCodes2013);
 		else
