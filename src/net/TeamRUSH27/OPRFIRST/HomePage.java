@@ -9,6 +9,7 @@
 package net.TeamRUSH27.OPRFIRST;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import net.TeamRUSH27.OPRFIRST.RSSFeed.FeedMessage;
 import net.TeamRUSH27.OPRFIRST.RSSFeed.RSSAdapter;
@@ -25,6 +26,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -32,12 +34,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.SearchView;
 
 /*
  * @author Michael Ray
@@ -48,6 +52,7 @@ public class HomePage extends SherlockFragmentActivity {
 	private ActionBar actionBar;
 	private MenuItem menuitem;
 	private AutoCompleteTextView textView;
+	private SearchView mSearchView;
 	private SharedPreferences prefs;
 	
 	@Override
@@ -84,6 +89,11 @@ public class HomePage extends SherlockFragmentActivity {
 		//Create the menu in the action bar for the home page
 		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.menu_home_page, menu);
+		
+		//Setup for the SearchView in the ActionBar's action_search for AutoCompleteTextView
+		MenuItem searchItem = menu.findItem(R.id.action_search);
+		mSearchView = (SearchView) searchItem.getActionView();
+		
 		return true;
 	}
 	
@@ -104,6 +114,9 @@ public class HomePage extends SherlockFragmentActivity {
 			return true;
 		case R.id.action_help: //Displays the help screen
 			onCoachMark();
+			return true;
+		case R.id.action_search: //Searching for team or event, like the AutoCompletingTextView below
+			
 			return true;
 		case R.id.action_about: //Displays the current information about the app
 			String vName="", vCode="";
@@ -153,25 +166,83 @@ public class HomePage extends SherlockFragmentActivity {
 	 * @return void
 	 */
 	public void onClick(View view) {
-		//Create an intent based on what the user is searching for
-		Intent intent;
-		if (textView.getText().toString().length()>4)  intent = new Intent(HomePage.this, RegInfoInterface.class);
-		else intent = new Intent(HomePage.this, TeamInfoInterface.class);
-		//Get the regional code for an even if the search text is a regional name
-		String[] regCodes;
-		if (prefs.getString("pref_year", "2013").equals("2013"))
+		//Create an intent based on what the user is searching for, if is eligible intent
+		Intent intent = new Intent();// = null;
+		String[] regCodes = null;
+		//If this is true, we have a team # on our hands to handle
+		if(textView.getText().charAt(0) >= 48 && textView.getText().charAt(0) <=57) {
+			try {
+				int teamNumber= Integer.parseInt(textView.getText().toString());
+				intent = new Intent(HomePage.this, TeamInfoInterface.class);
+				if(prefs.getString("pref_year", "2013").equals("2013")) 
+					regCodes = getResources().getStringArray(R.array.regCodes2013);
+				else
+					regCodes = getResources().getStringArray(R.array.regCodes2014);
+				//before we start the activity, check that the team actually exists
+				if(Utilities.teamExists(teamNumber, this)) {
+					intent.putExtra(HomePage.EXTRA_MESSAGE, String.valueOf(teamNumber));
+					startActivity(intent);
+				}
+				else {	//notify user
+					Toast.makeText(this, "FRC#" + teamNumber+ " doesn't exist!", Toast.LENGTH_SHORT).show();
+				}
+			}
+			catch(NumberFormatException e) {
+				//make the user try again! Shoulda formatted their number properly!
+				//So do nothing here. Exit this if-statement, and stop processing the request.
+			}
+		}
+		else { //check if it's an event!
+			if(prefs.getString("pref_year", "2013").equals("2013")) {
+				regCodes = getResources().getStringArray(R.array.regCodes2013);
+			}
+			else
+				regCodes = getResources().getStringArray(R.array.regCodes2014);
+			//Log.d("OPFIRST2014 code", Arrays.toString(regCodes));
+			int val = 0;
+			String code = textView.getText().toString();
+			for(int i = 0; i < regCodes.length; i++) {
+				if(code.equals(regCodes[i]))
+					val = i;
+			}
+			if(val%2==1) {
+				val--;
+				code = regCodes[val];
+			//}
+			Log.d("OPRFIRST2014 code, regCodes", code+";"+regCodes[val+1]);
+			//if(code.equals(regCodes[val+1])) {
+				intent = new Intent(HomePage.this, RegInfoInterface.class);
+				intent.putExtra(HomePage.EXTRA_MESSAGE,  code+";"+regCodes[val+1]);
+				startActivity(intent);
+			}
+			else {	//notify user of failure
+				Toast.makeText(this, "Event \"" + textView.getText() + "\" doesn't exist!", Toast.LENGTH_SHORT).show();
+			}
+		}
+		
+		
+		//if (textView.getText().toString().length()>4)  
+		//	intent = new Intent(HomePage.this, RegInfoInterface.class);
+		
+		/*if (prefs.getString("pref_year", "2013").equals("2013"))
 			regCodes = getResources().getStringArray(R.array.regCodes2013);
 		else
 			regCodes = getResources().getStringArray(R.array.regCodes2014);
 		int val = 0;
 		String code = textView.getText().toString();
-		for (int i=0; i<regCodes.length; i++) { if (code.equals(regCodes[i])) val = i; }
-		if (val%2==1) { val--; code = regCodes[val]; }
+		for (int i=0; i<regCodes.length; i++) { 
+			if (code.equals(regCodes[i])) 
+				val = i; 
+		}
+		if (val%2==1) { 
+			val--; 
+			code = regCodes[val]; 
+		}
 		//Add the info to the intent and start the activity
 		if (textView.getText().toString().length()>4) code+=";"+regCodes[val+1];
 		intent.putExtra(HomePage.EXTRA_MESSAGE, code);
 		if (code.length()!=0)
-			startActivity(intent);
+			startActivity(intent);*/
 	}
 	
 	private class RefreshAll extends AsyncTask <Void, Integer, String> {

@@ -6,7 +6,7 @@
         android:orderInCategory="0"
         android:icon="@drawable/ic_search"
         android:showAsAction="ifRoom|collapseActionView"
-        android:actionViewClass="android.widget.SearchView"
+        android:actionViewClass="com.actionbarsherlock.widget.SearchView"
         android:title="Search"/>
     
     <item

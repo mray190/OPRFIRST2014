@@ -233,7 +233,7 @@ public class TeamInfo {
 	            //Iterate through each line of data
 	            for (int i=0; i<tempData.size(); i++) {
 	            	String[] temp = new String[5];
-	            	//Seprate the line into 5 sections based on comma location
+	            	//Separate the line into 5 sections based on comma location
 	            	String tS = tempData.get(i);
 	            	for (int j=0; j<4; j++) {
 	            		temp[j] = tS.substring(0,tS.indexOf(","));
