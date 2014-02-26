@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -250,7 +251,7 @@ public class RegInfo {
 	 * @param update which is a boolean to express whether to update the file from the internet or not
 	 * @return RegInfoRanks[] which is an array of rank objects so an adapter can display the results
 	 */
-	public RegInfoRanks[] getRegInfoRanks(boolean update) {
+	public ArrayList<RegInfoRanks> getRegInfoRanks(boolean update) {
 		//Set the error code to false
 		error=false;
 		//Check if there is a forced update or a file doesnt exist
@@ -262,7 +263,7 @@ public class RegInfo {
 	        //Save the information to each object in the output array
 	        for (int i=0; i<origData.length; i++) { ranks[i] = new RegInfoRanks(origData[i]); }
 		} else openLocalFile(regCode + c.getApplicationContext().getResources().getString(R.string.rankType),1);
-		return ranks;
+		return new ArrayList<RegInfoRanks>(Arrays.asList(ranks));
 	}
 
 	/*
@@ -291,7 +292,7 @@ public class RegInfo {
 	 * @param update which is a boolean to express whether to update the file from the internet or not
 	 * @return RegInfoStats[] which is an array of stats objects so an adapter can display the results
 	 */
-	public RegInfoStats[] getRegInfoStats(boolean update) {
+	public ArrayList<RegInfoStats> getRegInfoStats(boolean update) {
 		//Set the error code to false
 		error=false;
 		//Check if there is a forced update or a file doesnt exist
@@ -352,7 +353,7 @@ public class RegInfo {
 		        writeFile(regCode+c.getApplicationContext().getResources().getString(R.string.statType), data);
 	        } catch (Exception e) { error=true; Log.d(c.getApplicationContext().getResources().getString(R.string.app_name),"Error calculating statistics"); }
 		} else openLocalFile(regCode+c.getApplicationContext().getResources().getString(R.string.statType),2);
-		return stats;
+		return new ArrayList<RegInfoStats>(Arrays.asList(stats));
 	}
 	
 	public String[] getStatsForPredict(int[] teams) {
@@ -456,7 +457,6 @@ public class RegInfo {
 	 * PreCondition: Url has been approved and internet connection exists
 	 * @param url which is the string url to get the json object from
 	 * @return JSONObject which is a specific data type
-	 */
 	private JSONObject jsonReader(String url) {
 		JSONObject json = null;
 		try {
@@ -468,4 +468,6 @@ public class RegInfo {
 		} catch (Exception e) {error=true;}
 		return json;
 	}
+	
+	 */
 }

@@ -161,10 +161,10 @@ public class TeamInfo {
 		this.stats = new RegInfoStats[regionals.size()];
 		for (int i=0; i<regionals.size(); i++) {
 			RegInfo reginfo = new RegInfo(c,regionals.get(i));
-			RegInfoStats[] stats = reginfo.getRegInfoStats(update);
-			for (int j=0; j<stats.length; j++) { 
-				if (stats[j].getTeam().equals(team)) { 
-					this.stats[i] = stats[j]; 
+			ArrayList<RegInfoStats> stats = reginfo.getRegInfoStats(update);
+			for (int j=0; j<stats.size(); j++) { 
+				if (stats.get(j).getTeam().equals(team)) { 
+					this.stats[i] = stats.get(j); 
 					this.stats[i].setTeam(regionals.get(i));
 					break; 
 				} 
@@ -179,10 +179,10 @@ public class TeamInfo {
 		this.ranks = new RegInfoRanks[regionals.size()];
 		for (int i=0; i<regionals.size(); i++) {
 			RegInfo reginfo = new RegInfo(c,regionals.get(i));
-			RegInfoRanks[] ranks = reginfo.getRegInfoRanks(update);
-			for (int j=0; j<ranks.length; j++) { 
-				if (ranks[j].getTeam()==Integer.parseInt(team)) { 
-					this.ranks[i] = ranks[j];
+			ArrayList<RegInfoRanks> ranks = reginfo.getRegInfoRanks(update);
+			for (int j=0; j<ranks.size(); j++) { 
+				if (ranks.get(j).getTeam()==Integer.parseInt(team)) { 
+					this.ranks[i] = ranks.get(j);
 					this.ranks[i].setTeam(regionals.get(i));
 					break; 
 				} 

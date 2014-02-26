@@ -8,18 +8,18 @@
  */
 package net.TeamRUSH27.OPRFIRST;
 
-import net.TeamRUSH27.OPRFIRST.RegInfoAwards.AwardInfoAdapter;
-import net.TeamRUSH27.OPRFIRST.RegInfoMatches.MatchInfoAdapter;
-import net.TeamRUSH27.OPRFIRST.RegInfoRanks.RankInfoAdapter;
-import net.TeamRUSH27.OPRFIRST.RegInfoStats.StatInfoAdapter;
-import net.TeamRUSH27.OPRFIRST.RegInfoTeams.TeamInfoAdapter;
+import net.TeamRUSH27.OPRFIRST.RegInfoAwards.*;
+import net.TeamRUSH27.OPRFIRST.RegInfoMatches.*;
+import net.TeamRUSH27.OPRFIRST.RegInfoRanks.*;
+import net.TeamRUSH27.OPRFIRST.RegInfoStats.*;
+import net.TeamRUSH27.OPRFIRST.RegInfoTeams.*;
+import net.TeamRUSH27.OPRFIRST.adapter.TabsPagerAdapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -37,21 +37,26 @@ import com.actionbarsherlock.view.SubMenu;
 /*
  * @author Michael Ray
  */
-public class RegInfoInterface extends SherlockFragmentActivity {
+public class RegInfoInterface extends SherlockFragmentActivity implements ActionBar.TabListener {
 
-	private ActionBar actionBar;
 	private ViewPager mPager;
+	private TabsPagerAdapter mPagerAdapter;
+	private ActionBar actionBar;
+	
 	private String regCode, regName;
 	private MenuItem menuitem;
 	
-	private RegInfo regInfo;
-	private RegInfoTeams.TeamsFragment teamFragment;
-	private RegInfoStats.StatsFragment statsFragment;
-	private RegInfoRanks.RanksFragment ranksFragment;
-	private RegInfoMatches.MatchesFragment matchesFragment;
-	private RegInfoAwards.AwardsFragment awardsFragment;
-	
 	private int menuVisibility;
+
+	public void onTabSelected(Tab tab, FragmentTransaction ft) { 
+		menuVisibility=tab.getPosition();
+		supportInvalidateOptionsMenu(); 
+		mPager.setCurrentItem(tab.getPosition()); 
+	}
+
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) { }
+
+	public void onTabReselected(Tab tab, FragmentTransaction ft) { }
 	
 	/*
 	 * Manages the navigation, fragments and panels for swipey tabs and action bar menus
@@ -59,54 +64,37 @@ public class RegInfoInterface extends SherlockFragmentActivity {
 	 * @param Title a string representing the title of the interface
 	 * @return void
 	 */
-	private void managePageNavigation(String title) {
+	private void managePageNavigation() {
+        mPager = (ViewPager) findViewById(R.id.pager);
 		//Sets an action bar with tabs
 		actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		actionBar.setTitle(title);
+		actionBar.setTitle(regName);
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		//Creates a Pager view and sets a listener and adapter to monitor swipes
-		Bundle bundl = new Bundle();
-		bundl.putString("regCode", title);
-		mPager = (ViewPager) findViewById(R.id.pager);
+		
         FragmentManager fm = getSupportFragmentManager();
-        ViewPager.SimpleOnPageChangeListener pageChangeListener = new ViewPager.SimpleOnPageChangeListener(){
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                actionBar.setSelectedNavigationItem(position);
-            }
-        };
-        mPager.setOnPageChangeListener(pageChangeListener);
-        RegPagerAdapter fragmentPagerAdapter = new RegPagerAdapter(fm,regCode);
-        mPager.setAdapter(fragmentPagerAdapter);
+		//Creates a Pager view and sets a listener and adapter to monitor swipes
+		
+		mPagerAdapter = new TabsPagerAdapter(fm, regCode);
+		mPager.setAdapter(mPagerAdapter);
+		
+		mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() { 
+		    public void onPageSelected(int position) { actionBar.setSelectedNavigationItem(position); }
+		    public void onPageScrolled(int arg0, float arg1, int arg2) { }
+		    public void onPageScrollStateChanged(int arg0) { }
+		});
+		
 		//Create the tabs and fragments
 		ActionBar.Tab tab1 = actionBar.newTab().setText(getResources().getString(R.string.tab1));
-		teamFragment = new RegInfoTeams.TeamsFragment();
-		tab1.setTabListener(new MyTabsListener(teamFragment));
-		teamFragment.setArguments(bundl);
-		actionBar.addTab(tab1);
+		actionBar.addTab(tab1.setTabListener(this));
 		ActionBar.Tab tab2 = actionBar.newTab().setText(getResources().getString(R.string.tab2));
-		ranksFragment = new RegInfoRanks.RanksFragment();
-		tab2.setTabListener(new MyTabsListener(ranksFragment));
-		ranksFragment.setArguments(bundl);
-		actionBar.addTab(tab2);
+		actionBar.addTab(tab2.setTabListener(this));
 		ActionBar.Tab tab3 = actionBar.newTab().setText(getResources().getString(R.string.tab3));
-		statsFragment = new RegInfoStats.StatsFragment();
-		tab3.setTabListener(new MyTabsListener(statsFragment));
-		statsFragment.setArguments(bundl);
-		actionBar.addTab(tab3);
+		actionBar.addTab(tab3.setTabListener(this));
 		ActionBar.Tab tab4 = actionBar.newTab().setText(getResources().getString(R.string.tab4));
-		matchesFragment = new RegInfoMatches.MatchesFragment();
-		tab4.setTabListener(new MyTabsListener(matchesFragment));
-		matchesFragment.setArguments(bundl);
-		actionBar.addTab(tab4);
+		actionBar.addTab(tab4.setTabListener(this));
 		ActionBar.Tab tab5 = actionBar.newTab().setText(getResources().getString(R.string.tab5));
-		awardsFragment = new RegInfoAwards.AwardsFragment();
-		tab5.setTabListener(new MyTabsListener(awardsFragment));
-		awardsFragment.setArguments(bundl);
-		actionBar.addTab(tab5);
-		
+		actionBar.addTab(tab5.setTabListener(this));
 	}
 	
 	@Override
@@ -118,22 +106,9 @@ public class RegInfoInterface extends SherlockFragmentActivity {
 		regCode = temp.substring(0,temp.indexOf(";"));
 		regName = temp.substring(temp.indexOf(";")+1);
 		//Set the page navigation
-		managePageNavigation(regName);
+		managePageNavigation();
 		//Set menu visibility
 		menuVisibility = 0;
-	}
-	
-	private class MyTabsListener implements ActionBar.TabListener {
-		public MyTabsListener(Fragment fragment) {}
-		public void onTabSelected(Tab tab, FragmentTransaction ft) { 
-			//Set the current item in the pager to the tab in the current position
-			mPager.setCurrentItem(tab.getPosition()); 
-			//Set the menu position based on the pager position and update the menu
-			menuVisibility=tab.getPosition();
-			supportInvalidateOptionsMenu(); 
-			}
-		public void onTabUnselected(Tab tab, FragmentTransaction ft) {}
-        public void onTabReselected(Tab tab, FragmentTransaction ft) {}
 	}
 	
 	
@@ -178,16 +153,39 @@ public class RegInfoInterface extends SherlockFragmentActivity {
 		case R.id.action_refresh: //Refresh all teams
 			//Set the refresh button to the progressbar layout, which is a spinning wheel
 			menuitem = item;
-			menuitem.setActionView(R.layout.progressbar);
+			menuitem.setActionView(R.layout.progressbar);				
 			//Start the refresh thread to update the regional
 			refresh task = new refresh();
-			task.execute();
+			task.execute(true);
 			return true;
-		case R.id.action_help: //Displays the help screen
-			onCoachMark();
+		case R.id.action_help: onCoachMark();
+			return true;
+		case R.id.sort_team: ((StatsFragment) mPagerAdapter.getRegisteredFragment(2)).statsSort(0); 
+			return true;
+		case R.id.sort_opr: ((StatsFragment) mPagerAdapter.getRegisteredFragment(2)).statsSort(1); 
+			return true;
+		case R.id.sort_aopr: ((StatsFragment) mPagerAdapter.getRegisteredFragment(2)).statsSort(2); 
+			return true;
+		case R.id.sort_topr: ((StatsFragment) mPagerAdapter.getRegisteredFragment(2)).statsSort(3); 
+			return true;
+		case R.id.sort_eopr: ((StatsFragment) mPagerAdapter.getRegisteredFragment(2)).statsSort(4); 
+			return true;
+		case R.id.sort_avg: ((StatsFragment) mPagerAdapter.getRegisteredFragment(2)).statsSort(5); 
+			return true;
+		case R.id.sort_max: ((StatsFragment) mPagerAdapter.getRegisteredFragment(2)).statsSort(6); 
+			return true;
+		case R.id.sort_rteam: ((RanksFragment) mPagerAdapter.getRegisteredFragment(1)).ranksSort(0);
+			return true;
+		case R.id.sort_rank: ((RanksFragment) mPagerAdapter.getRegisteredFragment(1)).ranksSort(1);
+			return true;
+		case R.id.sort_auton: ((RanksFragment) mPagerAdapter.getRegisteredFragment(1)).ranksSort(2);
+			return true;
+		case R.id.sort_teleop: ((RanksFragment) mPagerAdapter.getRegisteredFragment(1)).ranksSort(3);
+			return true;
+		case R.id.sort_end: ((RanksFragment) mPagerAdapter.getRegisteredFragment(1)).ranksSort(4);
 			return true;
 		}
-		return super.onOptionsItemSelected(item);
+		return super.onOptionsItemSelected(item);		
 	}
 	
 	/*
@@ -213,42 +211,39 @@ public class RegInfoInterface extends SherlockFragmentActivity {
 	    dialog.getWindow().setAttributes(lp);
 	}
 	
-	private class refresh extends AsyncTask <Void, String, String> {
-		private RegInfoMatches.MatchInfoAdapter mAdapter;
-		private RegInfoRanks.RankInfoAdapter rAdapter;
-		private RegInfoStats.StatInfoAdapter sAdapter;
-		private RegInfoTeams.TeamInfoAdapter tAdapter;
-		private RegInfoAwards.AwardInfoAdapter aAdapter;
+	private class refresh extends AsyncTask <Boolean, String, String> {
 		
 		@Override
-		protected String doInBackground(Void...params) {
+		protected String doInBackground(Boolean...params) {
 			try {
-				regInfo = new RegInfo(getApplicationContext(),regCode);
-				publishProgress("Stats"); sAdapter = new StatInfoAdapter(RegInfoInterface.this, R.layout.row_reginfo_stats, regInfo.getRegInfoStats(true));
-				publishProgress("Matches"); mAdapter = new MatchInfoAdapter(RegInfoInterface.this, R.layout.row_reginfo_matches, regInfo.getRegInfoMatches(false));
-				publishProgress("Ranks"); rAdapter = new RankInfoAdapter(RegInfoInterface.this, R.layout.row_reginfo_ranks, regInfo.getRegInfoRanks(false));
-				publishProgress("Awards"); aAdapter = new AwardInfoAdapter(RegInfoInterface.this, R.layout.row_reginfo_awards, regInfo.getRegInfoAwards(true)); 
-				publishProgress("Teams"); tAdapter = new TeamInfoAdapter(RegInfoInterface.this, R.layout.row_reginfo_teams, regInfo.getRegInfoTeams(getResources().openRawResource(R.raw.allteams),true));
-				if (regInfo.getError()) return getResources().getString(R.string.fUpdate);
+				publishProgress("Teams"); 
+				((TeamsFragment) mPagerAdapter.getRegisteredFragment(0)).populate(true);
+				publishProgress("Stats");
+				((StatsFragment) mPagerAdapter.getRegisteredFragment(2)).populate(true);
+				publishProgress("Matches"); 
+				((MatchesFragment) mPagerAdapter.getRegisteredFragment(3)).populate(false);
+				publishProgress("Ranks"); 
+				((RanksFragment) mPagerAdapter.getRegisteredFragment(1)).populate(false);
+				publishProgress("Awards"); 
+				((AwardsFragment) mPagerAdapter.getRegisteredFragment(4)).populate(true);
 			} catch (Exception ex) { return getResources().getString(R.string.fUpdate); }
 			return getResources().getString(R.string.tUpdate);
 		}
-		protected void onProgressUpdate(String...progress) { actionBar.setTitle("Updating: " + progress[0]); }
+		protected void onProgressUpdate(String...progress) { 
+			actionBar.setTitle("Updating: " + progress[0]);
+		}
 		@Override
 		protected void onPostExecute(String result) {
 			actionBar.setTitle(regCode);
-			teamFragment.setListAdapter(tAdapter);
-			ranksFragment.setListAdapter(rAdapter);
-			statsFragment.setListAdapter(sAdapter);
-			matchesFragment.setListAdapter(mAdapter);
-			awardsFragment.setListAdapter(aAdapter);
 			AlertDialog.Builder adb = new AlertDialog.Builder(RegInfoInterface.this);
 		    adb.setTitle(getResources().getString(R.string.updateS));
 		    adb.setMessage(result);
 		    adb.setPositiveButton("Ok", null);
 		    adb.show();
-			menuitem.collapseActionView();
-			menuitem.setActionView(null);
+			if (menuitem.getActionView().getId()==R.layout.progressbar) {
+				menuitem.collapseActionView();
+				menuitem.setActionView(null);
+			}
 		}
 	}
 }

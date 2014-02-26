@@ -12,7 +12,6 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -91,14 +90,19 @@ public class RegInfoTeams {
 		public void onCreate(Bundle savedInstanceState) {
     	    super.onCreate(savedInstanceState);
     		regInfo = new RegInfo(getActivity().getApplicationContext(),getArguments().getString("regCode"));
-    		calc task = new calc();
-    		task.execute();
+    		populate(false);
     	}
-    	class calc extends AsyncTask <String, Integer, String> {
+    	
+    	public void populate(boolean update) {
+    		calc task = new calc();
+    		task.execute(update);
+    	}
+    	
+    	class calc extends AsyncTask <Boolean, Integer, String> {
     		@Override
-    		protected String doInBackground(String...params) {
+    		protected String doInBackground(Boolean...params) {
     			try { 
-    				teams = regInfo.getRegInfoTeams(getResources().openRawResource(R.raw.allteams),false);
+    				teams = regInfo.getRegInfoTeams(getResources().openRawResource(R.raw.allteams),params[0]);
     				tAdapter = new TeamInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_teams, teams);
     			} catch (Exception ex) {}
     			return null;
@@ -119,16 +123,20 @@ public class RegInfoTeams {
 		@Override
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-			calc task = new calc();
-    		task.execute();
+			populate(false);
 	        return inflater.inflate(R.layout.row_teaminfo, container, false);
 	    }
+	
+		public void populate(boolean update) {
+			calc task = new calc();
+			task.execute(update);
+		}
 		
-    	class calc extends AsyncTask <String, Integer, String> {
+    	class calc extends AsyncTask <Boolean, Integer, String> {
     		private TeamInfo teaminfo;
     		private RegInfoTeams team;
     		@Override
-    		protected String doInBackground(String...params) {
+    		protected String doInBackground(Boolean...params) {
     			try {
     				teaminfo = new TeamInfo(getActivity().getApplicationContext(),getArguments().getString("team"));
     				team = teaminfo.getTeamInfo(getResources().openRawResource(R.raw.allteams),true);

@@ -38,6 +38,7 @@
     <string name="sort">Sort</string>
     <string name="sortTeam">By Team</string>
     <string name="sortOPR">By OPR</string>
+    <string name="sortMax">By Max Score</string>
     <string name="sortAOPR">By Auton OPR</string>
     <string name="sortTOPR">By Teleop OPR</string>
     <string name="sortEOPR">By Climb OPR</string>

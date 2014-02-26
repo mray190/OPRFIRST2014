@@ -86,19 +86,23 @@ public class RegInfoAwards {
     	public void onCreate(Bundle savedInstanceState) {
     	    super.onCreate(savedInstanceState);
     		regInfo = new RegInfo(getActivity().getApplicationContext(),getArguments().getString("regCode"));
+    		populate(false);
+    	}
+    	
+    	public void populate(boolean update) {
     		calc task = new calc();
-    		task.execute();
+    		task.execute(update);
     	}
     	@Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
             getListView().setCacheColorHint(Color.TRANSPARENT);
         }
-    	class calc extends AsyncTask <String, Integer, String> {
+    	class calc extends AsyncTask <Boolean, Integer, String> {
     		@Override
-    		protected String doInBackground(String...params) {
+    		protected String doInBackground(Boolean...params) {
     			try { 
-    				awards = regInfo.getRegInfoAwards(false);
+    				awards = regInfo.getRegInfoAwards(params[0]);
     				aAdapter = new AwardInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_awards, awards);
     			} catch (Exception ex) {}
     			return null;

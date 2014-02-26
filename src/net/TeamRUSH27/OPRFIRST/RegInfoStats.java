@@ -2,6 +2,8 @@ package net.TeamRUSH27.OPRFIRST;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,7 +23,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
 public class RegInfoStats implements Comparable<RegInfoStats> {
 
 	private String team;
-	private int totalPts, oppTotalPts, maxScore, matchesPlayed, sortMethod;
+	private int totalPts, oppTotalPts, maxScore, matchesPlayed;
 	private ArrayList<Integer> teamsPlayedWith;
 	private double OPR, DPR, teleopOPR, autonOPR, climbOPR, avgPts;
 	
@@ -68,7 +70,6 @@ public class RegInfoStats implements Comparable<RegInfoStats> {
     public void calcAvgScore() { avgPts = ((double)totalPts)/matchesPlayed; }
     public int getTtlPts() { return totalPts; }
     public int getOppScore() { return oppTotalPts; }
-	public void setSortMethod(int sortMethod) { this.sortMethod = sortMethod;}
 	public String getTeam() {return team;}
     
     public void setMatchInfo(int[] info) {
@@ -79,33 +80,53 @@ public class RegInfoStats implements Comparable<RegInfoStats> {
         for (int i=2; i<5; i++) { teamsPlayedWith.add(info[i]); }
     }
     
-    public int compareTo(RegInfoStats compareTeam) {
-    	if (sortMethod==0) {
-    		int compareQuantity = Integer.parseInt(((RegInfoStats) compareTeam).team);
-    		return Integer.parseInt(this.team) - compareQuantity; 
-    	} else if (sortMethod==1) {
-    		int compareQuantity = ((RegInfoStats) compareTeam).maxScore;
-    		return compareQuantity - this.maxScore; 
-    	} else {
-    		double compareQuantity, thisQuantity;
-    		if (sortMethod==2) {
-    			compareQuantity = ((RegInfoStats) compareTeam).OPR;
-    			thisQuantity = this.OPR;
-    		} else if (sortMethod==3) {
-    			compareQuantity = ((RegInfoStats) compareTeam).autonOPR;
-    			thisQuantity = this.autonOPR;
-    		} else if (sortMethod==4) {
-    			compareQuantity = ((RegInfoStats) compareTeam).teleopOPR;
-    			thisQuantity = this.teleopOPR;
-    		} else {
-    			compareQuantity = ((RegInfoStats) compareTeam).climbOPR;
-    			thisQuantity = this.climbOPR;
-    		}
-    		if (compareQuantity>thisQuantity) return 1;
-    		else if (compareQuantity<thisQuantity) return -1;
-    		else return 0; 
+    public static Comparator<RegInfoStats> TeamComparator = new Comparator<RegInfoStats>() {
+    	public int compare(RegInfoStats a1, RegInfoStats a2) { return Integer.parseInt(a1.team)-Integer.parseInt(a2.team); }
+    };
+    
+    public static Comparator<RegInfoStats> OPRComparator = new Comparator<RegInfoStats>() {
+    	public int compare(RegInfoStats a1, RegInfoStats a2) { 
+    		if (a2.OPR>a1.OPR) return 1;
+    		else if (a2.OPR<a1.OPR) return -1;
+    		else return 0;
     	}
-	}
+    };
+    
+    public static Comparator<RegInfoStats> APRComparator = new Comparator<RegInfoStats>() {
+    	public int compare(RegInfoStats a1, RegInfoStats a2) { 
+    		if (a2.autonOPR>a1.autonOPR) return 1;
+    		else if (a2.autonOPR<a1.autonOPR) return -1;
+    		else return 0;
+    	}
+    };
+    
+    public static Comparator<RegInfoStats> TPRComparator = new Comparator<RegInfoStats>() {
+    	public int compare(RegInfoStats a1, RegInfoStats a2) { 
+    		if (a2.teleopOPR>a1.teleopOPR) return 1;
+    		else if (a2.teleopOPR<a1.teleopOPR) return -1;
+    		else return 0;
+    	}
+    };
+    
+    public static Comparator<RegInfoStats> EPRComparator = new Comparator<RegInfoStats>() {
+    	public int compare(RegInfoStats a1, RegInfoStats a2) { 
+    		if (a2.climbOPR>a1.climbOPR) return 1;
+    		else if (a2.climbOPR<a1.climbOPR) return -1;
+    		else return 0;
+    	}
+    };
+    
+    public static Comparator<RegInfoStats> AvgPtsComparator = new Comparator<RegInfoStats>() {
+    	public int compare(RegInfoStats a1, RegInfoStats a2) { 
+    		if (a2.avgPts>a1.avgPts) return 1;
+    		else if (a2.avgPts<a1.avgPts) return -1;
+    		else return 0;
+    	}
+    };
+    
+    public static Comparator<RegInfoStats> MaxPtsComparator = new Comparator<RegInfoStats>() {
+    	public int compare(RegInfoStats a1, RegInfoStats a2) {  return a2.maxScore-a1.maxScore; }
+    };
     
     public String[] toWrite() {
         String[] data = new String[9];
@@ -124,10 +145,10 @@ public class RegInfoStats implements Comparable<RegInfoStats> {
     public static class StatInfoAdapter extends ArrayAdapter<RegInfoStats>{
 		Context context;
 		int layoutResourceId;
-		RegInfoStats data[] = null;
+		ArrayList<RegInfoStats> data = null;
 		DecimalFormat df = new DecimalFormat("0.00");
 		
-		public StatInfoAdapter(Context context, int layoutResourceId, RegInfoStats[] data) {
+		public StatInfoAdapter(Context context, int layoutResourceId, ArrayList<RegInfoStats> data) {
 			super(context, layoutResourceId, data);
 			this.layoutResourceId = layoutResourceId;
 			this.context = context;
@@ -154,7 +175,7 @@ public class RegInfoStats implements Comparable<RegInfoStats> {
 			} else {
 				holder = (RegInfoStatHolder)row.getTag();
 			}
-			RegInfoStats rS = data[position];
+			RegInfoStats rS = data.get(position);
 			holder.teamTxt.setText(rS.team);
 			holder.oprTxt.setText(Integer.toString(rS.maxScore));
 			holder.maxScoreTxt.setText(df.format(rS.OPR));
@@ -173,23 +194,29 @@ public class RegInfoStats implements Comparable<RegInfoStats> {
     public static class StatsFragment extends SherlockListFragment {
     	private RegInfo regInfo;
     	private StatInfoAdapter sAdapter;
-		private RegInfoStats[] stats;
+		private ArrayList<RegInfoStats> stats;
+		
     	public void onCreate(Bundle savedInstanceState) {
     	    super.onCreate(savedInstanceState);
     		regInfo = new RegInfo(getActivity().getApplicationContext(),getArguments().getString("regCode"));
-    		calc task = new calc();
-    		task.execute();
+    		populate(false);
     	}
+    	
+    	public void populate(boolean update) {
+    		calc task = new calc();
+    		task.execute(update);
+    	}
+    	
     	@Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
             getListView().setCacheColorHint(Color.TRANSPARENT);
         }
-    	class calc extends AsyncTask <String, Integer, String> {
+    	class calc extends AsyncTask <Boolean, Integer, String> {
     		@Override
-    		protected String doInBackground(String...params) {
+    		protected String doInBackground(Boolean...params) {
     			try { 
-    				stats = regInfo.getRegInfoStats(false);
+    				stats = regInfo.getRegInfoStats(params[0]);
     				sAdapter = new StatInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_stats, stats);
     			} catch (Exception ex) {}
     			return null;
@@ -197,10 +224,22 @@ public class RegInfoStats implements Comparable<RegInfoStats> {
     		@Override
     		protected void onPostExecute(String result) { setListAdapter(sAdapter); }
     	}
+    	
+    	public void statsSort(int sortMethod) {
+    		if (sortMethod==0) Collections.sort(stats,RegInfoStats.TeamComparator);
+    		else if (sortMethod==1) Collections.sort(stats,RegInfoStats.OPRComparator);
+    		else if (sortMethod==2) Collections.sort(stats,RegInfoStats.APRComparator);
+    		else if (sortMethod==3) Collections.sort(stats,RegInfoStats.TPRComparator);
+    		else if (sortMethod==4) Collections.sort(stats,RegInfoStats.EPRComparator);
+    		else if (sortMethod==5) Collections.sort(stats,RegInfoStats.AvgPtsComparator);
+    		else if (sortMethod==6) Collections.sort(stats,RegInfoStats.MaxPtsComparator);
+			sAdapter = new StatInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_stats, stats);
+			setListAdapter(sAdapter);
+    	}
     	@Override
     	public void onListItemClick(ListView l, View v, int position, long id) {
     		Intent intent = new Intent(getActivity().getApplicationContext(), TeamInfoInterface.class);
-    		intent.putExtra(HomePage.EXTRA_MESSAGE, stats[position].getTeam());
+    		intent.putExtra(HomePage.EXTRA_MESSAGE, stats.get(position).getTeam());
         	startActivity(intent);
     	}
     }
@@ -210,8 +249,7 @@ public class RegInfoStats implements Comparable<RegInfoStats> {
     	@Override
 		public void onCreate(Bundle savedInstanceState) {
     	    super.onCreate(savedInstanceState);
-    	    RegInfoStats[] stats = new RegInfoStats[0];
-    	    sAdapter = new StatInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_stats, stats);
+    	    sAdapter = new StatInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_stats, null);
     	    setListAdapter(sAdapter);
     	}
     	@Override
@@ -220,4 +258,6 @@ public class RegInfoStats implements Comparable<RegInfoStats> {
             getListView().setCacheColorHint(Color.TRANSPARENT);
         }
     }
+
+	public int compareTo(RegInfoStats arg0) {return 0;}
 }

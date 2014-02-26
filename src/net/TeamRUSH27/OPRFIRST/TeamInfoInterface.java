@@ -4,6 +4,7 @@ import net.TeamRUSH27.OPRFIRST.RegInfoAwards.AwardInfoAdapter;
 import net.TeamRUSH27.OPRFIRST.RegInfoMatches.MatchInfoAdapter;
 import net.TeamRUSH27.OPRFIRST.RegInfoRanks.RankInfoAdapter;
 import net.TeamRUSH27.OPRFIRST.RegInfoStats.StatInfoAdapter;
+import net.TeamRUSH27.OPRFIRST.adapter.TeamPagerAdapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -172,8 +173,8 @@ public class TeamInfoInterface extends SherlockFragmentActivity {
 			try {
 				setRefreshIcon = params[0];
 				TeamInfo teamInfo = new TeamInfo(getApplicationContext(),team);
-				publishProgress("Ranks"); rAdapter = new RankInfoAdapter(TeamInfoInterface.this, R.layout.row_reginfo_ranks, teamInfo.getTeamInfoRanks(params[0]));
-	    		publishProgress("Stats"); sAdapter = new StatInfoAdapter(TeamInfoInterface.this, R.layout.row_reginfo_stats, teamInfo.getTeamInfoStats(params[0]));
+				publishProgress("Ranks"); rAdapter = new RankInfoAdapter(TeamInfoInterface.this, R.layout.row_reginfo_ranks, null);
+	    		publishProgress("Stats"); sAdapter = new StatInfoAdapter(TeamInfoInterface.this, R.layout.row_reginfo_stats, null);
 	    		publishProgress("Matches"); mAdapter = new MatchInfoAdapter(TeamInfoInterface.this, R.layout.row_reginfo_matches, teamInfo.getTeamInfoMatches(params[0]));
 	    		publishProgress("Awards"); aAdapter = new AwardInfoAdapter(TeamInfoInterface.this, R.layout.row_reginfo_awards, teamInfo.getTeamInfoAwards(params[0]));
 	    		if (teamInfo.getError()) return getResources().getString(R.string.fUpdate);

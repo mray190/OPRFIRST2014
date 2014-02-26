@@ -20,30 +20,32 @@
 		        android:title="@string/sort"
 		        android:icon="@drawable/ic_sort">
                 <menu>
+                    <group android:id="@+id/stats">
                     <item android:id="@+id/sort_team"
                         android:title="@string/sortTeam" />
-                    <group android:id="@+id/stats">
                     <item android:id="@+id/sort_opr"
                         android:title="@string/sortOPR" />
                     <item android:id="@+id/sort_aopr"
                         android:title="@string/sortAOPR" />
                     <item android:id="@+id/sort_topr"
                         android:title="@string/sortTOPR" />
-                    <item android:id="@+id/sort_copr"
+                    <item android:id="@+id/sort_eopr"
                         android:title="@string/sortEOPR" />
                     <item android:id="@+id/sort_avg"
                         android:title="@string/sortAvg" />
+                    <item android:id="@+id/sort_max"
+                        android:title="@string/sortMax" />
                     </group>
                     <group android:id="@+id/ranks" >
+                    <item android:id="@+id/sort_rteam"
+                        android:title="@string/sortTeam" />
                     <item android:id="@+id/sort_rank"
                         android:title="@string/sortRank" />
-                    <item android:id="@+id/sort_record"
-                        android:title="@string/sortRecord" />
                     <item android:id="@+id/sort_auton"
                         android:title="@string/sortAPts" />
                     <item android:id="@+id/sort_teleop"
                         android:title="@string/sortTPts" />
-                    <item android:id="@+id/sort_climb"
+                    <item android:id="@+id/sort_end"
                         android:title="@string/sortEPts" />    
                     </group>
                 </menu>

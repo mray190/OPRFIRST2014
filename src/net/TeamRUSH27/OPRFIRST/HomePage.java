@@ -168,7 +168,8 @@ public class HomePage extends SherlockFragmentActivity {
 		for (int i=0; i<regCodes.length; i++) { if (code.equals(regCodes[i])) val = i; }
 		if (val%2==1) { val--; code = regCodes[val]; }
 		//Add the info to the intent and start the activity
-		intent.putExtra(HomePage.EXTRA_MESSAGE, code+";"+regCodes[val+1]);
+		if (textView.getText().toString().length()>4) code+=";"+regCodes[val+1];
+		intent.putExtra(HomePage.EXTRA_MESSAGE, code);
 		if (code.length()!=0)
 			startActivity(intent);
 	}

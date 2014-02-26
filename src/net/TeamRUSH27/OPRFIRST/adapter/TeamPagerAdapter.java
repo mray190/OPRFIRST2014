@@ -1,5 +1,15 @@
-package net.TeamRUSH27.OPRFIRST;
+package net.TeamRUSH27.OPRFIRST.adapter;
 
+import net.TeamRUSH27.OPRFIRST.RegInfoAwards;
+import net.TeamRUSH27.OPRFIRST.RegInfoMatches;
+import net.TeamRUSH27.OPRFIRST.RegInfoRanks;
+import net.TeamRUSH27.OPRFIRST.RegInfoStats;
+import net.TeamRUSH27.OPRFIRST.RegInfoTeams;
+import net.TeamRUSH27.OPRFIRST.RegInfoAwards.TeamAwardsFragment;
+import net.TeamRUSH27.OPRFIRST.RegInfoMatches.TeamMatchesFragment;
+import net.TeamRUSH27.OPRFIRST.RegInfoRanks.TeamRanksFragment;
+import net.TeamRUSH27.OPRFIRST.RegInfoStats.TeamStatsFragment;
+import net.TeamRUSH27.OPRFIRST.RegInfoTeams.InfoFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
