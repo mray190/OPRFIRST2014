@@ -40,5 +40,15 @@
         android:textColor="#ffffff"
         android:textIsSelectable="true"
         android:textSize="16sp" />
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+	    android:layout_marginBottom="15dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#ffff00"
+        android:text="Additional info available in future update"
+        android:textSize="20sp" />
 
 </LinearLayout>

@@ -122,14 +122,33 @@ public class RegInfoAwards {
     	private AwardInfoAdapter aAdapter;
     	public void onCreate(Bundle savedInstanceState) {
     	    super.onCreate(savedInstanceState);
-    	    RegInfoAwards[] awards = new RegInfoAwards[0];
-    	    aAdapter = new AwardInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_awards, awards);
-    	    setListAdapter(aAdapter);
+    	    //aAdapter = new AwardInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_awards, null);
+    	    //setListAdapter(aAdapter);
     	}
     	@Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
             getListView().setCacheColorHint(Color.TRANSPARENT);
         }
-	}
+    	public void populate(boolean update) {
+    		calc task = new calc();
+    		task.execute(update);
+    	}
+    	class calc extends AsyncTask <Boolean, Integer, String> {
+    		@Override
+    		protected String doInBackground(Boolean...params) {
+    			try { 
+    			} catch (Exception ex) {}
+    			return null;
+    		}
+    		@Override
+    		protected void onPostExecute(String result) { }
+    	}
+    	@Override
+    	public void onListItemClick(ListView l, View v, int position, long id) {
+    		Intent intent = new Intent(getActivity().getApplicationContext(), RegInfoInterface.class);
+    		intent.putExtra(HomePage.EXTRA_MESSAGE, "");
+        	startActivity(intent);
+    	}
+    }
 }

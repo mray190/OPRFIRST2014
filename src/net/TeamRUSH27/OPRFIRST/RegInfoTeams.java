@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +92,7 @@ public class RegInfoTeams {
 		public void onCreate(Bundle savedInstanceState) {
     	    super.onCreate(savedInstanceState);
     		regInfo = new RegInfo(getActivity().getApplicationContext(),getArguments().getString("regCode"));
-    		populate(false);
+    		populate(true);
     	}
     	
     	public void populate(boolean update) {
@@ -124,7 +125,7 @@ public class RegInfoTeams {
 		@Override
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-			populate(false);
+			populate(true);
 	        return inflater.inflate(R.layout.row_teaminfo, container, false);
 	    }
 	
@@ -140,7 +141,7 @@ public class RegInfoTeams {
     		protected String doInBackground(Boolean...params) {
     			try {
     				teaminfo = new TeamInfo(getActivity().getApplicationContext(),getArguments().getString("team"));
-    				team = teaminfo.getTeamInfo(getResources().openRawResource(R.raw.allteams),true);
+    				team = teaminfo.getTeamInfo(getResources().openRawResource(R.raw.allteams),params[0]);
     			} catch (Exception ex) {}
     			return null;
     		}

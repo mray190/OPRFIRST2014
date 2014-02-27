@@ -8,15 +8,17 @@
  */
 package net.TeamRUSH27.OPRFIRST;
 
-import net.TeamRUSH27.OPRFIRST.RegInfoAwards.*;
-import net.TeamRUSH27.OPRFIRST.RegInfoMatches.*;
-import net.TeamRUSH27.OPRFIRST.RegInfoRanks.*;
-import net.TeamRUSH27.OPRFIRST.RegInfoStats.*;
-import net.TeamRUSH27.OPRFIRST.RegInfoTeams.*;
+import net.TeamRUSH27.OPRFIRST.RegInfoAwards.AwardsFragment;
+import net.TeamRUSH27.OPRFIRST.RegInfoMatches.MatchesFragment;
+import net.TeamRUSH27.OPRFIRST.RegInfoRanks.RanksFragment;
+import net.TeamRUSH27.OPRFIRST.RegInfoStats.StatsFragment;
+import net.TeamRUSH27.OPRFIRST.RegInfoTeams.TeamsFragment;
 import net.TeamRUSH27.OPRFIRST.adapter.TabsPagerAdapter;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -77,6 +80,7 @@ public class RegInfoInterface extends SherlockFragmentActivity implements Action
 		
 		mPagerAdapter = new TabsPagerAdapter(fm, regCode);
 		mPager.setAdapter(mPagerAdapter);
+		mPager.setOffscreenPageLimit(5);
 		
 		mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() { 
 		    public void onPageSelected(int position) { actionBar.setSelectedNavigationItem(position); }
@@ -150,14 +154,33 @@ public class RegInfoInterface extends SherlockFragmentActivity implements Action
 			intent = new Intent(getBaseContext(),SettingsActivity.class);
 			startActivity(intent);
 			return true;
-		case R.id.action_refresh: //Refresh all teams
-			//Set the refresh button to the progressbar layout, which is a spinning wheel
-			menuitem = item;
-			menuitem.setActionView(R.layout.progressbar);				
+		case R.id.action_refresh: //Refresh all teams			
 			//Start the refresh thread to update the regional
 			refresh task = new refresh();
 			task.execute(true);
 			return true;
+		case R.id.action_about: //Displays the current information about the app
+			String vName="", vCode="";
+			try {
+				PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+				vName = pInfo.versionName;
+				vCode = Integer.toString(pInfo.versionCode);
+			} catch (NameNotFoundException e) {	}
+			//Creates a dialog box to display to the users
+			AlertDialog.Builder adb = new AlertDialog.Builder(this);
+		    adb.setTitle("About");
+		    adb.setMessage(getResources().getString(R.string.app_name) + "\nVersion: " + vName + " (" + vCode + ")\n" + getResources().getString(R.string.author));
+		    adb.setPositiveButton("Ok", null);
+		    adb.show();
+		    return true;
+		case R.id.action_acronyms:
+			AlertDialog.Builder adb2 = new AlertDialog.Builder(this);
+		    adb2.setTitle("About");
+		    if (Integer.parseInt(regCode.substring(0,4))==2014) adb2.setMessage(getResources().getString(R.string.acro14));
+		    else adb2.setMessage(getResources().getString(R.string.acro13));
+		    adb2.setPositiveButton("Ok", null);
+		    adb2.show();
+		    return true;
 		case R.id.action_help: onCoachMark();
 			return true;
 		case R.id.sort_team: ((StatsFragment) mPagerAdapter.getRegisteredFragment(2)).statsSort(0); 
@@ -235,15 +258,7 @@ public class RegInfoInterface extends SherlockFragmentActivity implements Action
 		@Override
 		protected void onPostExecute(String result) {
 			actionBar.setTitle(regCode);
-			AlertDialog.Builder adb = new AlertDialog.Builder(RegInfoInterface.this);
-		    adb.setTitle(getResources().getString(R.string.updateS));
-		    adb.setMessage(result);
-		    adb.setPositiveButton("Ok", null);
-		    adb.show();
-			if (menuitem.getActionView().getId()==R.layout.progressbar) {
-				menuitem.collapseActionView();
-				menuitem.setActionView(null);
-			}
+			Toast.makeText(RegInfoInterface.this, "Updating/Update Complete", Toast.LENGTH_SHORT).show();
 		}
 	}
 }

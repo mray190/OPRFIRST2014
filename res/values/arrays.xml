@@ -98,6 +98,7 @@
 		<item>2013einstein</item><item>FIRST Championship - Einstein Field</item>
 	</string-array>
 	<string-array name="regCodes2014">
+	    <item>2014test</item><item>Test</item>
 	    <item>2014txsa</item><item>Alamo</item>
 		<item>2014azch</item><item>Arizona</item>
 		<item>2014arfa</item><item>Arkansas</item>

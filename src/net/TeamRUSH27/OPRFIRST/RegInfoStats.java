@@ -147,12 +147,14 @@ public class RegInfoStats implements Comparable<RegInfoStats> {
 		int layoutResourceId;
 		ArrayList<RegInfoStats> data = null;
 		DecimalFormat df = new DecimalFormat("0.00");
+		int year;
 		
-		public StatInfoAdapter(Context context, int layoutResourceId, ArrayList<RegInfoStats> data) {
+		public StatInfoAdapter(Context context, int layoutResourceId, ArrayList<RegInfoStats> data, int year) {
 			super(context, layoutResourceId, data);
 			this.layoutResourceId = layoutResourceId;
 			this.context = context;
 			this.data = data;
+			this.year = year;
 		}
 		
 		@Override
@@ -171,6 +173,11 @@ public class RegInfoStats implements Comparable<RegInfoStats> {
 				holder.autonOPRTxt = (TextView)row.findViewById(R.id.autonOPRTxt);
 				holder.teleopOPRTxt = (TextView)row.findViewById(R.id.teleopOPRTxt);
 				holder.climbOPRTxt = (TextView)row.findViewById(R.id.climbOPRTxt);
+
+				holder.autonOPRConstTxt = (TextView)row.findViewById(R.id.autonOPRConst);
+				holder.teleopOPRConstTxt = (TextView)row.findViewById(R.id.teleopOPRConst);
+				holder.endOPRConstTxt = (TextView)row.findViewById(R.id.endOPRConst);
+				
 				row.setTag(holder);
 			} else {
 				holder = (RegInfoStatHolder)row.getTag();
@@ -183,11 +190,17 @@ public class RegInfoStats implements Comparable<RegInfoStats> {
 			holder.autonOPRTxt.setText(df.format(rS.autonOPR));
 			holder.teleopOPRTxt.setText(df.format(rS.teleopOPR));
 			holder.climbOPRTxt.setText(df.format(rS.climbOPR));
+
+			holder.autonOPRConstTxt.setText("AOPR:");
+			holder.teleopOPRConstTxt.setText("TOPR:");
+			if (year==2014) holder.endOPRConstTxt.setText("AsOPR");
+			else holder.endOPRConstTxt.setText("COPR:");	
 			return row;
 		}
 		
 		static class RegInfoStatHolder {
 			TextView teamTxt, oprTxt, maxScoreTxt, avgPtsTxt, autonOPRTxt, teleopOPRTxt, climbOPRTxt;
+			TextView autonOPRConstTxt, teleopOPRConstTxt, endOPRConstTxt;
 		}
 	}
     
@@ -195,9 +208,11 @@ public class RegInfoStats implements Comparable<RegInfoStats> {
     	private RegInfo regInfo;
     	private StatInfoAdapter sAdapter;
 		private ArrayList<RegInfoStats> stats;
+		private int year;
 		
     	public void onCreate(Bundle savedInstanceState) {
     	    super.onCreate(savedInstanceState);
+    	    year = Integer.parseInt(getArguments().getString("regCode").substring(0,4));
     		regInfo = new RegInfo(getActivity().getApplicationContext(),getArguments().getString("regCode"));
     		populate(false);
     	}
@@ -217,7 +232,7 @@ public class RegInfoStats implements Comparable<RegInfoStats> {
     		protected String doInBackground(Boolean...params) {
     			try { 
     				stats = regInfo.getRegInfoStats(params[0]);
-    				sAdapter = new StatInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_stats, stats);
+    				sAdapter = new StatInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_stats, stats, year);
     			} catch (Exception ex) {}
     			return null;
     		}
@@ -233,7 +248,7 @@ public class RegInfoStats implements Comparable<RegInfoStats> {
     		else if (sortMethod==4) Collections.sort(stats,RegInfoStats.EPRComparator);
     		else if (sortMethod==5) Collections.sort(stats,RegInfoStats.AvgPtsComparator);
     		else if (sortMethod==6) Collections.sort(stats,RegInfoStats.MaxPtsComparator);
-			sAdapter = new StatInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_stats, stats);
+			sAdapter = new StatInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_stats, stats, year);
 			setListAdapter(sAdapter);
     	}
     	@Override
@@ -246,17 +261,36 @@ public class RegInfoStats implements Comparable<RegInfoStats> {
 	
     public static class TeamStatsFragment extends SherlockListFragment {
     	private StatInfoAdapter sAdapter;
-    	@Override
-		public void onCreate(Bundle savedInstanceState) {
+    	public void onCreate(Bundle savedInstanceState) {
     	    super.onCreate(savedInstanceState);
-    	    sAdapter = new StatInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_stats, null);
-    	    setListAdapter(sAdapter);
+    	    //sAdapter = new StatInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_stats, null);
+    	    //setListAdapter(sAdapter);
     	}
     	@Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
             getListView().setCacheColorHint(Color.TRANSPARENT);
         }
+    	public void populate(boolean update) {
+    		calc task = new calc();
+    		task.execute(update);
+    	}
+    	class calc extends AsyncTask <Boolean, Integer, String> {
+    		@Override
+    		protected String doInBackground(Boolean...params) {
+    			try { 
+    			} catch (Exception ex) {}
+    			return null;
+    		}
+    		@Override
+    		protected void onPostExecute(String result) { }
+    	}
+    	@Override
+    	public void onListItemClick(ListView l, View v, int position, long id) {
+    		Intent intent = new Intent(getActivity().getApplicationContext(), RegInfoInterface.class);
+    		intent.putExtra(HomePage.EXTRA_MESSAGE, "");
+        	startActivity(intent);
+    	}
     }
 
 	public int compareTo(RegInfoStats arg0) {return 0;}

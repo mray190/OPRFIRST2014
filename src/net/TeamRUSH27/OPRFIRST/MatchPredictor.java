@@ -25,14 +25,17 @@ public class MatchPredictor extends SherlockFragmentActivity {
 		actionBar.setTitle(getResources().getString(R.string.title_activity_match_predictor));
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		String[] data = getIntent().getExtras().getStringArray(HomePage.EXTRA_MESSAGE);
-		TextView[] tvs = new TextView[20];
-		int[] ids = {R.id.redTeam1,R.id.redOpr1,R.id.redTeam2,R.id.redOpr2,R.id.redTeam3,R.id.redOpr3,
+		TextView[] tvs = new TextView[22];
+		int[] ids = {R.id.egy1,R.id.egy2,R.id.redTeam1,R.id.redOpr1,R.id.redTeam2,R.id.redOpr2,R.id.redTeam3,R.id.redOpr3,
 				R.id.blueTeam1,R.id.blueOpr1,R.id.blueTeam2,R.id.blueOpr2,R.id.blueTeam3,R.id.blueOpr3,
 				R.id.redScore,R.id.redAuton,R.id.redTeleop,R.id.redEnd,
 				R.id.blueScore,R.id.blueAuton,R.id.blueTeleop,R.id.blueEnd};
 		for (int i=0; i<ids.length; i++) {
 			tvs[i] = (TextView)findViewById(ids[i]);
-			tvs[i].setText(data[i]);
+			if (i==0 || i==1) {
+				if (data[i].equals("2014")) tvs[i].setText(getResources().getString(R.string.matchPredictEnd14));
+				else tvs[i].setText(getResources().getString(R.string.matchPredictEnd13));
+			} else tvs[i].setText(data[i]);
 		}
 	}
 

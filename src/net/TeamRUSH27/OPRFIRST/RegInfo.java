@@ -58,6 +58,8 @@ public class RegInfo {
 	 */
 	public String getRegCode() { return regCode; }
 	
+	private int getYear() { return Integer.parseInt(regCode.substring(0,4)); }
+	
 	/*
 	 * Retrieve if any errors have surfaced while running through the calculations
 	 * @return boolean if error has occurred
@@ -109,21 +111,24 @@ public class RegInfo {
             //Iterate through the file to read all of the data and store into a temp array list
             while ((line = br.readLine())!=null) { tempData.add(line); }
             //Determine what the size of the data is by using modulus division to find # of entries
-        	if (tempData.size()%9==0) size=9;
+            if (tempData.size()%9==0) size=9;
         	else if (tempData.size()%10==0) size=10;
         	else size=11;
             if (type==0) { //Store information into Matches
+            	size=10;
                 matches = new RegInfoMatches[tempData.size()/size];
                 data = new String[size];
             	//Iterate through each match
                 for (int i=0; i<tempData.size(); i+=size) {
                 	//Iterate through all the information for each match
-                    for (int j=0; j<size; j++) { data[j] = tempData.get(i+j); }
+                    for (int j=0; j<size; j++) { data[j] = tempData.get(i+j);}
                     if (data[size-2].equals("") && data[size-1].equals("")) { data[size-1]="0"; data[size-2]="0"; }
                     //Store into a match object
                     matches[i/size]= new RegInfoMatches(data);
                 }
             } else if (type==1) { //Store information into Ranks
+            	if (getYear()==2014) size=10;
+            	else size=9;
         		ranks = new RegInfoRanks[tempData.size()/size];
                 data = new String[size];
                 //Iterate through each rank
@@ -131,7 +136,7 @@ public class RegInfo {
                 	//Iterate through all the information for each rank
                     for (int j=0; j<size; j++) { data[j] = tempData.get(i+j); }
                     //Store into a rank object
-                    ranks[i/size]= new RegInfoRanks(data);
+                    ranks[i/size]= new RegInfoRanks(data,getYear());
                 }
             } else if (type==2) { //Store information into Stats
                 stats = new RegInfoStats[tempData.size()/size];
@@ -198,24 +203,29 @@ public class RegInfo {
             	//Stop parsing once it has reached the end of the readable table
                 if ((inputLine.indexOf("</tbody")!=-1) && selector==cselector) break;
                 //Add information between the TD Align or TD Style tags and its end tag to the array list
-                if ((selector==cselector && cselector==1) && (inputLine.indexOf("<TD align")!=-1 || inputLine.indexOf("<TD style")!=-1))
-                    origData.add(inputLine.substring(inputLine.indexOf(">")+1, inputLine.indexOf("\u003C\u002F")));
+                if ((selector==cselector && cselector==1) && (inputLine.indexOf("<TD align")!=-1 || inputLine.indexOf("<TD style")!=-1)) {
+                	String temp = inputLine.substring(inputLine.indexOf(">")+1, inputLine.indexOf("\u003C\u002F"));
+                	if (temp.length()==0) temp="0";
+                    origData.add(temp);
                 //Add information between the TD Align or TD Style tags and its end tag to the array list with extra parameters for time
-                if ((selector==cselector && cselector==2) && (inputLine.indexOf("<TD align")!=-1 || inputLine.indexOf("<TD style")!=-1) && inputLine.indexOf("PM")==-1 && inputLine.indexOf("AM")==-1) 
+                }
+                if ((selector==cselector && cselector==2) && (inputLine.indexOf("<TD align")!=-1 || inputLine.indexOf("<TD style")!=-1) && (inputLine.indexOf("PM")==-1 || inputLine.indexOf("AM")==-1))
                     origData.add(inputLine.substring(inputLine.indexOf(">")+1, inputLine.indexOf("\u003C\u002F")));
                 //Add information between standard tags
                 if (startAwardSearch && inputLine.indexOf("font-family:Arial'>")!=-1)
                     origData.add(inputLine.substring(inputLine.indexOf("Arial'")+7, inputLine.indexOf("<o:p>")));
                 //Add 1 to the selector which tells the parser that it has reached another division in the table or start parsing
-                if (inputLine.indexOf("Blue Score")!=-1 || inputLine.indexOf("Played")!=-1) selector++;
+                if (inputLine.indexOf("Blue Score")!=-1 || inputLine.indexOf("Played")!=-1 || inputLine.indexOf("PLAYED")!=-1) selector++;
                 //Starts parsing the table for award urls
                 if (inputLine.indexOf("<td style='background:white;padding:3.75pt")!=-1) startAwardSearch=true;
             }
             //Determine which information is being read and set the size of the output array accordingly
-        	if (origData.size()%9==0) size=9;
-        	else if (origData.size()%10==0) size=10;
-        	else if (infoType.equals(c.getApplicationContext().getResources().getString(R.string.awardType))) size=5;
-        	else size=11;
+            if (infoType.equals(c.getApplicationContext().getResources().getString(R.string.matchType))) size=10;
+            else if (infoType.equals(c.getApplicationContext().getResources().getString(R.string.awardType))) size=5;
+            else if (infoType.equals(c.getApplicationContext().getResources().getString(R.string.rankType))) {
+            	if (getYear()==2014) size=10;
+            	else size=9;
+            } else size=11;
         	//Loop through the raw data and place into the output array
             finalData = new String[origData.size()/size][size];
             for (int i=0; i<origData.size(); i++) { finalData[i/size][i%size] = origData.get(i); }
@@ -261,7 +271,7 @@ public class RegInfo {
 			
 	        ranks = new RegInfoRanks[origData.length];
 	        //Save the information to each object in the output array
-	        for (int i=0; i<origData.length; i++) { ranks[i] = new RegInfoRanks(origData[i]); }
+	        for (int i=0; i<origData.length; i++) { ranks[i] = new RegInfoRanks(origData[i],getYear()); }
 		} else openLocalFile(regCode + c.getApplicationContext().getResources().getString(R.string.rankType),1);
 		return new ArrayList<RegInfoRanks>(Arrays.asList(ranks));
 	}
@@ -356,7 +366,7 @@ public class RegInfo {
 		return new ArrayList<RegInfoStats>(Arrays.asList(stats));
 	}
 	
-	public String[] getStatsForPredict(int[] teams) {
+	public String[] getStatsForPredict(String year, int[] teams) {
 		int[] data = new int[30];
 		for (int i=0; i<6; i++) {
 			RegInfoStats stat = null;
@@ -366,12 +376,14 @@ public class RegInfo {
 			for (int j=0; j<temp.length; j++) { data[i*5+j+1] = temp[j];}
 		}
 		int[] fData = new int[20];
-		String[] f = new String[20];
+		String[] f = new String[22];
 		int c=0;
 		for (int i=0; i<data.length; i+=5) { fData[c] = data[i]; fData[c+1] = data[i+1]; c+=2; }
 		for (int j=0; j<4; j++) { for (int i=1+j; i<data.length/2; i+=5) {  fData[12+j] += data[i];} }
 		for (int j=0; j<4; j++) { for (int i=16+j; i<data.length; i+=5) { fData[16+j] += data[i];} }
-		for (int i=0; i<fData.length; i++) { f[i] = Integer.toString(fData[i]);}
+		for (int i=2; i<f.length; i++) { f[i] = Integer.toString(fData[i-2]);}
+		f[0] = year;
+		f[1] = year;
 		return f;
 	}
 

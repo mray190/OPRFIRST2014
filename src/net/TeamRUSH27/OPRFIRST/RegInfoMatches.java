@@ -137,9 +137,11 @@ public class RegInfoMatches {
     	private RegInfo regInfo;
     	private MatchInfoAdapter mAdapter;
 		private RegInfoMatches[] matches;
+		private String year;
     	@Override
 		public void onCreate(Bundle savedInstanceState) {
     	    super.onCreate(savedInstanceState);
+    	    year = getArguments().getString("regCode").substring(0,4);
     		regInfo = new RegInfo(getActivity().getApplicationContext(),getArguments().getString("regCode"));
     		populate(false);
     	}
@@ -173,7 +175,7 @@ public class RegInfoMatches {
     			regInfo.getRegInfoStats(false);
     			int[] teams = new int[6];
     			for (int i=0; i<teams.length; i++) { teams[i] = params[i]; }
-    			return regInfo.getStatsForPredict(teams);
+    			return regInfo.getStatsForPredict(year, teams);
     		} 
     		@Override
     		protected void onPostExecute(String[] result) {
@@ -191,18 +193,36 @@ public class RegInfoMatches {
     
     public static class TeamMatchesFragment extends SherlockListFragment {
     	private MatchInfoAdapter mAdapter;
-    	@Override
-		public void onCreate(Bundle savedInstanceState) {
+    	public void onCreate(Bundle savedInstanceState) {
     	    super.onCreate(savedInstanceState);
-    	    RegInfoMatches[] matches = new RegInfoMatches[0];
-    	    mAdapter = new MatchInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_matches, matches);
-    	    setListAdapter(mAdapter); 
+    	    //mAdapter = new MatchInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_matches, null);
+    	    //setListAdapter(mAdapter);
     	}
     	@Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
             getListView().setCacheColorHint(Color.TRANSPARENT);
         }
+    	public void populate(boolean update) {
+    		calc task = new calc();
+    		task.execute(update);
+    	}
+    	class calc extends AsyncTask <Boolean, Integer, String> {
+    		@Override
+    		protected String doInBackground(Boolean...params) {
+    			try { 
+    			} catch (Exception ex) {}
+    			return null;
+    		}
+    		@Override
+    		protected void onPostExecute(String result) { }
+    	}
+    	@Override
+    	public void onListItemClick(ListView l, View v, int position, long id) {
+    		Intent intent = new Intent(getActivity().getApplicationContext(), RegInfoInterface.class);
+    		intent.putExtra(HomePage.EXTRA_MESSAGE, "");
+        	startActivity(intent);
+    	}
     }
     
 }

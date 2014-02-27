@@ -27,16 +27,27 @@ public class RegInfoRanks implements Comparable<RegInfoRanks> {
 	int sortMethod;
 	String[] data;
 	
-	public RegInfoRanks(String[] data) {
-		this.data=data;
-		rank = Integer.parseInt(data[0]);
-		team = data[1];
-		qualifyingPts = (int)Double.parseDouble(data[2]);
-		autonPts = (int)Double.parseDouble(data[3]);
-		climbPts = (int)Double.parseDouble(data[4]);
-		teleopPts = (int)Double.parseDouble(data[5]);
-		if (data[7].indexOf("-")!=-1) record = data[7];
-        else record = data[6];
+	public RegInfoRanks(String[] data,int year) {
+		if (year==2013) {
+			this.data=data;
+			rank = Integer.parseInt(data[0]);
+			team = data[1];
+			qualifyingPts = (int)Double.parseDouble(data[2]);
+			autonPts = (int)Double.parseDouble(data[3]);
+			climbPts = (int)Double.parseDouble(data[4]);
+			teleopPts = (int)Double.parseDouble(data[5]);
+			if (data[7].indexOf("-")!=-1) record = data[7];
+	        else record = data[6];
+		} else if (year==2014) {
+			this.data=data;
+			rank = Integer.parseInt(data[0]);
+			team = data[1];
+			qualifyingPts = (int)Double.parseDouble(data[2]);
+			autonPts = (int)Double.parseDouble(data[4]);
+			climbPts = (int)Double.parseDouble(data[3]);
+			teleopPts = (int)(Double.parseDouble(data[5])+Double.parseDouble(data[6]));
+			record = data[7];
+		}
 	}
 	
 	public static Comparator<RegInfoRanks> TeamComparator = new Comparator<RegInfoRanks>() {
@@ -72,12 +83,14 @@ public class RegInfoRanks implements Comparable<RegInfoRanks> {
 		Context context;
 		int layoutResourceId;
 		ArrayList<RegInfoRanks> data = null;
+		int year;
 		
-		public RankInfoAdapter(Context context, int layoutResourceId, ArrayList<RegInfoRanks> data) {
+		public RankInfoAdapter(Context context, int layoutResourceId, ArrayList<RegInfoRanks> data, int year) {
 			super(context, layoutResourceId, data);
 			this.layoutResourceId = layoutResourceId;
 			this.context = context;
 			this.data = data;
+			this.year = year;
 		}
 		
 		@Override
@@ -96,6 +109,11 @@ public class RegInfoRanks implements Comparable<RegInfoRanks> {
 				holder.autonTxt = (TextView)row.findViewById(R.id.autonTxt);
 				holder.teleopTxt = (TextView)row.findViewById(R.id.teleopTxt);
 				holder.climbTxt = (TextView)row.findViewById(R.id.climbTxt);
+
+				holder.autonConstTxt = (TextView)row.findViewById(R.id.autonConst);
+				holder.teleopConstTxt = (TextView)row.findViewById(R.id.teleopConst);
+				holder.endConstTxt = (TextView)row.findViewById(R.id.endConst);
+				
 				row.setTag(holder);
 			} else {
 				holder = (RegInfoRankHolder)row.getTag();
@@ -104,15 +122,26 @@ public class RegInfoRanks implements Comparable<RegInfoRanks> {
 			holder.teamTxt.setText(rD.team);
 			holder.rankTxt.setText(Integer.toString(rD.rank));
 			holder.recordTxt.setText(rD.record);
-			holder.qsTxt.setText(Integer.toString(rD.qualifyingPts));
+			holder.qsTxt.setText("QS: "+Integer.toString(rD.qualifyingPts));
 			holder.autonTxt.setText(Integer.toString(rD.autonPts));
 			holder.teleopTxt.setText(Integer.toString(rD.teleopPts));
 			holder.climbTxt.setText(Integer.toString(rD.climbPts));
+			
+			if (year==2013) {
+				holder.autonConstTxt.setText("A:");
+				holder.teleopConstTxt.setText("T:");
+				holder.endConstTxt.setText("C:");
+			} else {
+				holder.autonConstTxt.setText("A:");
+				holder.teleopConstTxt.setText("T:");
+				holder.endConstTxt.setText("As:");
+			}			
 			return row;
 		}
 		
 		static class RegInfoRankHolder {
 			TextView teamTxt, rankTxt, recordTxt, qsTxt, autonTxt, teleopTxt, climbTxt;
+			TextView autonConstTxt, teleopConstTxt, endConstTxt;
 		}
 	}
 	
@@ -120,8 +149,10 @@ public class RegInfoRanks implements Comparable<RegInfoRanks> {
     	private RegInfo regInfo;
     	private RankInfoAdapter rAdapter;
     	private ArrayList<RegInfoRanks> ranks;
+    	private int year;
     	public void onCreate(Bundle savedInstanceState) {
     	    super.onCreate(savedInstanceState);
+    	    year = Integer.parseInt(getArguments().getString("regCode").substring(0,4));
     		regInfo = new RegInfo(getActivity().getApplicationContext(),getArguments().getString("regCode"));
     		populate(false);
     	}
@@ -139,7 +170,7 @@ public class RegInfoRanks implements Comparable<RegInfoRanks> {
     		protected String doInBackground(Boolean...params) {
     			try { 
     				ranks = regInfo.getRegInfoRanks(params[0]);
-    				rAdapter = new RankInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_ranks, ranks);
+    				rAdapter = new RankInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_ranks, ranks, year);
     			} catch (Exception ex) {}
     			return null;
     		}
@@ -152,7 +183,7 @@ public class RegInfoRanks implements Comparable<RegInfoRanks> {
     		else if (sortMethod==2) Collections.sort(ranks,RegInfoRanks.AutonComparator);
     		else if (sortMethod==3) Collections.sort(ranks,RegInfoRanks.TeleopComparator);
     		else if (sortMethod==4) Collections.sort(ranks,RegInfoRanks.EndComparator);
-			rAdapter = new RankInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_ranks, ranks);
+			rAdapter = new RankInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_ranks, ranks, year);
 			setListAdapter(rAdapter);
     	}
     	@Override
@@ -167,14 +198,34 @@ public class RegInfoRanks implements Comparable<RegInfoRanks> {
     	private RankInfoAdapter rAdapter;
     	public void onCreate(Bundle savedInstanceState) {
     	    super.onCreate(savedInstanceState);
-    	    rAdapter = new RankInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_ranks, null);
-    	    setListAdapter(rAdapter);
+    	    //rAdapter = new RankInfoAdapter(getSherlockActivity(), R.layout.row_reginfo_ranks, null);
+    	    //setListAdapter(rAdapter);
     	}
     	@Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
             getListView().setCacheColorHint(Color.TRANSPARENT);
         }
+    	public void populate(boolean update) {
+    		calc task = new calc();
+    		task.execute(update);
+    	}
+    	class calc extends AsyncTask <Boolean, Integer, String> {
+    		@Override
+    		protected String doInBackground(Boolean...params) {
+    			try { 
+    			} catch (Exception ex) {}
+    			return null;
+    		}
+    		@Override
+    		protected void onPostExecute(String result) { }
+    	}
+    	@Override
+    	public void onListItemClick(ListView l, View v, int position, long id) {
+    		Intent intent = new Intent(getActivity().getApplicationContext(), RegInfoInterface.class);
+    		intent.putExtra(HomePage.EXTRA_MESSAGE, "");
+        	startActivity(intent);
+    	}
     }
 
 	public int compareTo(RegInfoRanks another) { return 0; }

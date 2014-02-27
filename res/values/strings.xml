@@ -25,6 +25,7 @@
     <string name="main_content_desc">MSC 2013 - Photo by Dan Ernst</string>
     <string name="main_button">Search</string>
     <string name="author">Created by Michael Ray</string>
+    <string name="tab0">Info</string>
     <string name="tab1">Teams</string>
     <string name="tab2">Rankings</string>
     <string name="tab3">Stats</string>
@@ -41,13 +42,13 @@
     <string name="sortMax">By Max Score</string>
     <string name="sortAOPR">By Auton OPR</string>
     <string name="sortTOPR">By Teleop OPR</string>
-    <string name="sortEOPR">By Climb OPR</string>
+    <string name="sortEOPR">By Climb(13)/Assist(14) OPR</string>
     <string name="sortAvg">By Average Pts</string>
     <string name="sortRank">By Rank</string>
     <string name="sortRecord">By Record</string>
     <string name="sortAPts">By Auton Pts</string>
     <string name="sortTPts">By Teleop Pts</string>
-    <string name="sortEPts">By Climb Pts</string>
+    <string name="sortEPts">By Climb(13)/Assists(14) Pts</string>
     <string name="firstWebsite">http://www2.usfirst.org/</string>
     <string name="awardType">awards</string>
     <string name="matchType">matchresults</string>
@@ -59,5 +60,23 @@
 	<string name="matchPredictScore">Score:</string>
 	<string name="matchPredictAuton">Auton:</string>
 	<string name="matchPredictTeleop">Teleop:</string>
-	<string name="matchPredictEnd">Climb:</string>
+	<string name="matchPredictEnd13">Climb:</string>
+	<string name="matchPredictEnd14">Assists:</string>
+	<string name="action_acronyms">Acronyms</string>
+	<string name="acro13">OPR - Offensive Power Ranking\n
+	    AOPR - Auton OPR\n
+	    TOPR - Teleop OPR\n
+	    COPR - Climb OPR\n
+	    QS - Qualifying Score\n
+	    A - Auton Points\n
+	    T - Teleop Points\n
+	    C - Climb Points</string>
+	<string name="acro14">OPR - Offensive Power Ranking\n
+	    AOPR - Auton OPR\n
+	    TOPR - Teleop/Truss/Catch OPR\n
+	    AsOPR - Assists OPR\n
+	    QS - Qualifying Score\n
+	    A - Auton Points\n
+	    T - Teleop/Truss/Catch Points\n
+	    As - Assists Points</string>
 </resources>

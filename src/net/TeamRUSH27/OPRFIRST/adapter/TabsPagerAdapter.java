@@ -8,12 +8,12 @@ import net.TeamRUSH27.OPRFIRST.RegInfoTeams;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
-public class TabsPagerAdapter extends FragmentStatePagerAdapter {
+public class TabsPagerAdapter extends FragmentPagerAdapter {
 	private SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 	private String regCode;
 	private FragmentManager fm;

@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:background="#000000"
     android:orientation="horizontal"
-    android:paddingBottom="10dp"
-    android:paddingTop="10dp" >
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp" >
 		
     <TextView
 		 android:id="@+id/teamTxt"
@@ -94,10 +94,10 @@
 			android:background="#000000">
 			
              <TextView
+                 android:id="@+id/autonOPRConst"
 				 android:layout_width="0dp"
 				 android:layout_height="fill_parent"
 				 android:textColor="#ffffff"
-				 android:text="AOPR"
 				 android:gravity="center_vertical"
 				 android:textSize="10sp"
 				 android:layout_weight="0.13"> </TextView>
@@ -110,10 +110,10 @@
 				 android:layout_weight="0.2"> </TextView>
             
             <TextView
+                 android:id="@+id/teleopOPRConst"
 				 android:layout_width="0dp"
 				 android:layout_height="fill_parent"
 				 android:textColor="#ffffff"
-				 android:text="TOPR"
 				 android:gravity="center_vertical"
 				 android:textSize="10sp"
 				 android:layout_weight="0.13"> </TextView>
@@ -126,10 +126,10 @@
 				 android:layout_weight="0.2"> </TextView>
             
             <TextView
+                 android:id="@+id/endOPRConst"
 				 android:layout_width="0dp"
 				 android:layout_height="fill_parent"
 				 android:textColor="#ffffff"
-				 android:text="COPR"
 				 android:gravity="center_vertical"
 				 android:textSize="10sp"
 				 android:layout_weight="0.13"> </TextView>
