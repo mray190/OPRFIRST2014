@@ -371,9 +371,14 @@ public class RegInfo {
 		for (int i=0; i<6; i++) {
 			RegInfoStats stat = null;
 			for (int j=0; j<stats.length; j++) { if (teams[i]==Integer.parseInt(stats[j].getTeam())) { stat = stats[j]; break; } }
-			data[i*5] = Integer.parseInt(stat.getTeam());
-			int[] temp = stat.getOPRs();
-			for (int j=0; j<temp.length; j++) { data[i*5+j+1] = temp[j];}
+			if (stat==null) {
+				data[i*5] = teams[i];
+				for (int j=0; j<4; j++) data[i*5+j+1] = 0;
+			} else {
+				data[i*5] = Integer.parseInt(stat.getTeam());
+				int[] temp = stat.getOPRs();
+				for (int j=0; j<temp.length; j++) { data[i*5+j+1] = temp[j];}
+			}
 		}
 		int[] fData = new int[20];
 		String[] f = new String[22];
@@ -401,7 +406,7 @@ public class RegInfo {
 		if (update || !c.getApplicationContext().getFileStreamPath(regCode+"teams").exists()) {
 			//Initialize variables
 			String line;
-			int[] tempIndexer = new int[5000];
+			int[] tempIndexer = new int[8000];
 	        ArrayList<String[]> data = new ArrayList<String[]>();
 	        ArrayList<String> printedData = new ArrayList<String>();
 	        try {

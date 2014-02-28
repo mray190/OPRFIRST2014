@@ -257,7 +257,7 @@ public class RegInfoInterface extends SherlockFragmentActivity implements Action
 		}
 		@Override
 		protected void onPostExecute(String result) {
-			actionBar.setTitle(regCode);
+			actionBar.setTitle(regName);
 			Toast.makeText(RegInfoInterface.this, "Updating/Update Complete", Toast.LENGTH_SHORT).show();
 		}
 	}
